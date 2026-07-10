@@ -415,6 +415,376 @@ footer {
     .education-card-content {
         flex-direction: column;
     }
-
-    
+  
 }
+
+<style>
+  #open-agent-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    z-index: 999999;
+
+    padding: 15px 27px;
+
+    border: none;
+    border-radius: 50px;
+
+    background: linear-gradient(135deg, #087d62, #055843);
+    color: white;
+
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+      0 12px 30px rgba(0, 0, 0, 0.35),
+      0 0 25px rgba(0, 180, 140, 0.25);
+
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  #open-agent-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+      0 18px 38px rgba(0, 0, 0, 0.4),
+      0 0 35px rgba(0, 180, 140, 0.4);
+  }
+
+  #agent-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.76);
+    backdrop-filter: blur(6px);
+
+    z-index: 2147483000;
+  }
+
+  #agent-overlay.active {
+    display: flex;
+  }
+
+  #agent-modal {
+    position: relative;
+
+    width: min(680px, 94vw);
+    min-height: 760px;
+
+    padding:
+      55px
+      48px
+      38px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 30px;
+
+    background:
+      radial-gradient(
+        circle at 50% 15%,
+        rgba(0, 121, 94, 0.18),
+        transparent 35%
+      ),
+      linear-gradient(
+        180deg,
+        #111216 0%,
+        #08090c 100%
+      );
+
+    box-shadow:
+      0 35px 100px rgba(0, 0, 0, 0.65),
+      0 0 40px rgba(0, 80, 120, 0.18);
+
+    font-family: Arial, sans-serif;
+
+    animation: showAgentModal 0.35s ease;
+  }
+
+  @keyframes showAgentModal {
+    from {
+      opacity: 0;
+      transform: translateY(25px) scale(0.97);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  #agent-x-btn {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+
+    width: 44px;
+    height: 44px;
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+
+    font-size: 28px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  #agent-x-btn:hover {
+    background: rgba(255, 255, 255, 0.13);
+    transform: rotate(90deg);
+  }
+
+  .agent-heading {
+    text-align: center;
+    color: white;
+  }
+
+  .agent-badge {
+    display: inline-block;
+
+    margin-bottom: 12px;
+    padding: 7px 13px;
+
+    border: 1px solid rgba(42, 214, 168, 0.3);
+    border-radius: 30px;
+
+    background: rgba(0, 157, 118, 0.12);
+    color: #4bd7b0;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+  }
+
+  .agent-heading h2 {
+    margin: 0 0 12px;
+
+    color: #ffffff;
+
+    font-size: 30px;
+    font-weight: 750;
+    letter-spacing: 1px;
+  }
+
+  #connection-text {
+    margin: 0 0 24px;
+
+    color: #92949c;
+
+    font-size: 17px;
+  }
+
+  #agent-video-container {
+    position: relative;
+
+    width: 100%;
+    min-height: 405px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 28px;
+
+    border-radius: 24px;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(70, 42, 28, 0.5),
+        rgba(7, 8, 11, 0.95) 72%
+      );
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    box-shadow:
+      inset 0 0 40px rgba(0, 0, 0, 0.5),
+      0 20px 50px rgba(0, 0, 0, 0.25);
+
+    overflow: hidden;
+  }
+
+  #agent-video-container did-agent {
+    position: relative !important;
+
+    width: 100% !important;
+    height: 405px !important;
+
+    inset: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+
+    display: block !important;
+  }
+
+  .agent-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    margin-top: 10px;
+  }
+
+  .agent-action {
+    min-height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    border-radius: 40px;
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .agent-action:hover {
+    transform: translateY(-2px);
+  }
+
+  .agent-action.primary {
+    border: 1px solid #087c61;
+    background: linear-gradient(
+      135deg,
+      #087a5f,
+      #05664f
+    );
+  }
+
+  .agent-action.primary:hover {
+    background: linear-gradient(
+      135deg,
+      #099774,
+      #087459
+    );
+  }
+
+  .agent-action.secondary {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #1b1c20;
+    color: #aaaab1;
+  }
+
+  .agent-action.secondary:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: #24252a;
+    color: white;
+  }
+
+  .action-icon {
+    font-size: 20px;
+  }
+
+  #agent-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+
+    margin: 24px auto 0;
+    padding: 13px 29px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 40px;
+
+    background: #17181c;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 12px 25px rgba(0, 35, 65, 0.35);
+
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  #agent-close-btn:hover {
+    background: #23252a;
+    transform: translateY(-2px);
+  }
+
+  #agent-close-btn span {
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+
+  /* התאמה לטלפון */
+
+  @media (max-width: 600px) {
+    #agent-overlay {
+      padding: 0;
+    }
+
+    #agent-modal {
+      width: 100%;
+      min-height: 100vh;
+
+      padding:
+        68px
+        18px
+        30px;
+
+      border-radius: 0;
+    }
+
+    .agent-heading h2 {
+      font-size: 25px;
+    }
+
+    #connection-text {
+      font-size: 15px;
+    }
+
+    #agent-video-container {
+      min-height: 370px;
+    }
+
+    #agent-video-container did-agent {
+      height: 370px !important;
+    }
+
+    .agent-actions {
+      grid-template-columns: 1fr;
+    }
+
+    #open-agent-btn {
+      right: 18px;
+      bottom: 18px;
+    }
+  }
+</style>
