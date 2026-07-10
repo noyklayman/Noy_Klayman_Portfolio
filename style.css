@@ -410,13 +410,13 @@ header {
 
 #contact h2 {
     position: relative;
-    max-width: 1260px;
-    margin: 0 auto 38px;
-    padding-bottom: 18px;
-    color: #ffffff;
-    font-size: 38px;
-    font-weight: 800;
     text-align: center;
+    max-width: 1260px;
+    margin: 0 auto 25px;
+    padding-bottom: 12px;
+    color: #fff;
+    font-size: 29px;
+    font-weight: 800;
 }
 
 #contact h2::after {
@@ -424,9 +424,9 @@ header {
     position: absolute;
     left: 50%;
     bottom: 0;
-    width: 70px;
-    height: 4px;
-    border-radius: 999px;
+    width: 47px;
+    height: 3px;
+    border-radius: 2px;
     background: #3b82f6;
     transform: translateX(-50%);
 }
