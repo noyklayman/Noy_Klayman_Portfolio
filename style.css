@@ -1026,47 +1026,6 @@ body.agent-open { overflow: hidden; }
    CONTACT SECTION - FOUR MODERN CARDS
 ===================================================== */
 
-#contact {
-    width: 100%;
-    padding: 64px 24px 78px;
-    overflow: hidden;
-    text-align: center;
-    background:
-        radial-gradient(
-            circle at 50% 12%,
-            rgba(37, 99, 235, 0.11),
-            transparent 34%
-        ),
-        #020817;
-    border-bottom: 1px solid #121a2b;
-}
-
-/* Contact title */
-#contact > h2 {
-    position: relative;
-    width: fit-content;
-    max-width: none;
-    margin: 0 auto 28px;
-    padding: 0 0 18px;
-    color: #ffffff;
-    font-size: 38px;
-    line-height: 1.1;
-    font-weight: 800;
-    text-align: center;
-}
-
-#contact > h2::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: 70px;
-    height: 4px;
-    border-radius: 999px;
-    background: #3b82f6;
-    transform: translateX(-50%);
-}
-
 /* Intro sentence */
 .contact-intro {
     max-width: 760px;
