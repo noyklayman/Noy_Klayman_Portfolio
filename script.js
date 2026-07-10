@@ -57,29 +57,4 @@ document.addEventListener("DOMContentLoaded", function () {
       closeAgent();
     }
   });
-
-
-const agentSubtitles = document.getElementById("agent-subtitles");
-
-function showAgentSubtitle(text) {
-  if (!agentSubtitles || !text) {
-    return;
-  }
-
-  agentSubtitles.textContent = text;
-  agentSubtitles.classList.add("show");
-}
-
-function hideAgentSubtitle() {
-  if (!agentSubtitles) {
-    return;
-  }
-
-  agentSubtitles.classList.remove("show");
-}
-
-// בדיקה זמנית בלבד
-showAgentSubtitle(
-  "Hello! I'm Noy's AI assistant. Ask me anything about her projects."
-);
 });
