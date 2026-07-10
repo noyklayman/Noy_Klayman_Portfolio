@@ -186,7 +186,53 @@
             </footer>
           </div>
     </footer>
-	
+
+<button id="open-agent-btn">
+  Talk to my AI
+</button>
+
+<div id="agent-overlay">
+
+  <div id="agent-modal">
+
+    <button id="agent-x-btn" aria-label="Close">
+      ×
+    </button>
+
+    <div class="agent-heading">
+      <span class="agent-badge">AI AVATAR</span>
+
+      <h2>BOOTING AI</h2>
+
+      <p id="connection-text">
+        Connecting to Noy's Avatar...
+      </p>
+    </div>
+
+    <div id="agent-video-container"></div>
+
+    <div class="agent-actions">
+
+      <button class="agent-action primary" id="ask-me-btn">
+        <span class="action-icon">🎙</span>
+        ASK ME
+      </button>
+
+      <button class="agent-action secondary" id="who-am-i-btn">
+        <span class="action-icon">💬</span>
+        WHO AM I?
+      </button>
+
+    </div>
+
+    <button id="agent-close-btn">
+      <span>×</span>
+      CLOSE
+    </button>
+
+  </div>
+
+</div>
 	<script type="module"
       src="https://agent.d-id.com/v2/index.js"
       data-mode="fabio"
