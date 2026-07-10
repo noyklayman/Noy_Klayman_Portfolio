@@ -696,3 +696,12 @@ body.agent-open { overflow: hidden; }
     margin-top: auto;
     align-self: center;
 }
+
+.box ul {
+    list-style-position: inside;
+    padding-left: 0;
+}
+
+.box li {
+    margin-bottom: 12px;
+}
