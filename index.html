@@ -277,99 +277,127 @@
       <button id="agent-close-btn" class="agent-close-btn" type="button" aria-label="Close AI assistant">×</button>
     </div>
 
+<!-- AI ASSISTANT -->
+<div id="agent-overlay" class="agent-overlay active" aria-hidden="false">
 
-      <!-- AI SUBTITLES -->
+  <section
+    class="agent-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="agent-title"
+  >
+
+    <div class="agent-topbar">
+
+      <div class="agent-brand">
+
+        <div class="agent-icon" aria-hidden="true">✦</div>
+
+        <div>
+          <h2 id="agent-title">My AI Assistant</h2>
+
+          <p>
+            <span class="agent-status-dot"></span>
+            Connected and ready to chat
+          </p>
+        </div>
+
+      </div>
+
+      <button
+        id="agent-close-btn"
+        class="agent-close-btn"
+        type="button"
+        aria-label="Close AI assistant"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <!-- VIDEO + SUBTITLES -->
+    <div
+      class="agent-video-card"
+      style="
+        position: relative;
+        overflow: hidden;
+        border-radius: 28px;
+      "
+    >
+
       <div
-        id="agent-subtitles"
-        class="agent-subtitles"
+        id="did-agent-mount"
+        class="did-agent-mount"
+        aria-label="D-ID AI avatar"
+        style="
+          position: relative;
+          width: 100%;
+          z-index: 1;
+        "
+      ></div>
+
+      <div
         aria-live="polite"
-        aria-atomic="true">
+        aria-atomic="true"
+        style="
+          position: absolute;
+          left: 50%;
+          bottom: 24px;
+          transform: translateX(-50%);
+          z-index: 999999;
+
+          display: block;
+          visibility: visible;
+          opacity: 1;
+
+          width: calc(100% - 48px);
+          max-width: 680px;
+          padding: 14px 20px;
+
+          background: rgba(0, 0, 0, 0.82);
+          color: #ffffff;
+
+          font-family: Arial, sans-serif;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 1.4;
+          text-align: center;
+
+          border: 2px solid rgba(255, 255, 255, 0.85);
+          border-radius: 14px;
+          box-sizing: border-box;
+
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
+          pointer-events: none;
+        "
+      >
         This is a subtitle test
       </div>
+
     </div>
 
     <div class="agent-content">
       <h3>Hello! I’m Noy’s AI assistant.</h3>
-      <p>Ask me about Noy, her experience, technologies, projects or how to contact her.</p>
+
+      <p>
+        Ask me about Noy, her experience, technologies,
+        projects or how to contact her.
+      </p>
     </div>
+
   </section>
+
 </div>
 
-<button id="agent-open-btn" class="agent-open-btn hidden" type="button" aria-label="Open AI assistant">
+<button
+  id="agent-open-btn"
+  class="agent-open-btn hidden"
+  type="button"
+  aria-label="Open AI assistant"
+>
   <span class="agent-open-icon" aria-hidden="true">✦</span>
   <span>Open AI Assistant</span>
 </button>
-
-
-	<div
-  id="agent-video-wrapper"
-  style="
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 28px;
-  "
->
-  <div
-    id="did-agent-mount"
-    class="did-agent-mount"
-    aria-label="D-ID AI avatar"
-    style="
-      position: relative;
-      width: 100%;
-      z-index: 1;
-    "
-  ></div>
-
-  <div
-    id="agent-subtitles"
-    style="
-      position: absolute;
-      left: 50%;
-      bottom: 25px;
-      transform: translateX(-50%);
-      z-index: 2147483647;
-
-      display: block;
-      visibility: visible;
-      opacity: 1;
-
-      width: calc(100% - 60px);
-      max-width: 680px;
-      padding: 14px 20px;
-
-      background: rgba(0, 0, 0, 0.82);
-      color: white;
-
-      font-family: Arial, sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1.4;
-      text-align: center;
-
-      border: 2px solid white;
-      border-radius: 14px;
-      box-sizing: border-box;
-      pointer-events: none;
-    "
-  >
-    This is a subtitle test
-  </div>
-</div>
-
-	<div
-  style="
-    display: block;
-    background: red;
-    color: white;
-    padding: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-  "
->
-  HTML TEST – THE NEW FILE IS LOADED
-</div>
 	
 <script
   type="module"
@@ -396,20 +424,13 @@
       return;
     }
 
-    window.showAgentSubtitle = function (text) {
-      if (!text) return;
-      subtitles.textContent = text;
-      subtitles.classList.add("show");
-    };
-
-    window.hideAgentSubtitle = function () {
-      subtitles.classList.remove("show");
-    };
-
-    // Temporary test so you can confirm that the subtitle box is visible.
-    window.showAgentSubtitle("Hello! I'm Noy's AI assistant. Ask me anything about her projects.");
+    subtitles.textContent =
+      "Hello! I'm Noy's AI assistant. Ask me anything about her projects.";
   });
 </script>
+
+
+
 
 </body>
 </html>
