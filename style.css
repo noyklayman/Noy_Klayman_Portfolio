@@ -572,25 +572,6 @@ body.agent-open { overflow: hidden; }
     line-height: 1.55;
 }
 
-.agent-suggestions {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-    margin-top: 16px;
-}
-
-.agent-suggestions button {
-    min-height: 45px;
-    padding: 9px 10px;
-    border: 1px solid rgba(59, 130, 246, 0.72);
-    border-radius: 11px;
-    background: rgba(15, 23, 42, 0.72);
-    color: #7dd3fc;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: default;
-}
-
 .agent-open-btn {
     position: fixed;
     right: 22px;
