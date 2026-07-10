@@ -1164,3 +1164,62 @@ body.agent-open {
         font-size: 38px;
     }
 }
+
+
+/* =========================================
+   AI AVATAR SUBTITLES
+   ========================================= */
+
+.agent-video-card {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+}
+
+.did-agent-mount {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.agent-subtitles {
+  position: absolute !important;
+
+  left: 50% !important;
+  bottom: 24px !important;
+  transform: translateX(-50%) !important;
+
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  width: calc(100% - 60px) !important;
+  max-width: 700px !important;
+
+  padding: 14px 20px !important;
+
+  background: rgba(0, 0, 0, 0.78) !important;
+  color: #ffffff !important;
+
+  font-family: Arial, sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  text-align: center !important;
+
+  border-radius: 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5) !important;
+
+  pointer-events: none !important;
+  z-index: 2147483647 !important;
+}
+
+@media (max-width: 600px) {
+  .agent-subtitles {
+    bottom: 16px !important;
+    width: calc(100% - 30px) !important;
+    padding: 10px 14px !important;
+    font-size: 16px !important;
+  }
+}
