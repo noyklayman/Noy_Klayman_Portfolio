@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
       closeAgent();
     }
   });
-});
+
 
 const agentSubtitles = document.getElementById("agent-subtitles");
 
@@ -82,3 +82,4 @@ function hideAgentSubtitle() {
 showAgentSubtitle(
   "Hello! I'm Noy's AI assistant. Ask me anything about her projects."
 );
+});
