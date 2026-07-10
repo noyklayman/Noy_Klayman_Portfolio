@@ -497,33 +497,64 @@ body.agent-open { overflow: hidden; }
     transform: rotate(90deg);
 }
 
+/* D-ID VIDEO AREA */
 .agent-video-card {
     position: relative;
-    flex: 1 1 auto;
-    min-height: 0;
+    width: calc(100% - 32px);
+    height: 520px;
+    min-height: 520px;
+    flex: 0 0 520px;
     margin: 0 16px;
     overflow: hidden;
+
     border: 1px solid rgba(148, 163, 184, 0.23);
     border-radius: 18px;
-    background: radial-gradient(circle at center, #172554, #070b18 70%);
+    background: radial-gradient(
+        circle at center,
+        #172554,
+        #070b18 70%
+    );
+
     box-shadow: inset 0 0 38px rgba(0, 0, 0, 0.28);
 }
 
 .did-agent-mount {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    display: block;
     width: 100%;
     height: 100%;
+    min-height: 520px;
     overflow: hidden;
+    border-radius: 18px;
 }
 
 .did-agent-mount > * {
+    display: block !important;
     width: 100% !important;
     height: 100% !important;
+    min-width: 100% !important;
+    min-height: 520px !important;
     max-width: none !important;
     max-height: none !important;
 }
 
+@media (min-width: 721px) and (max-height: 850px) {
+    .agent-video-card {
+        height: 390px;
+        min-height: 390px;
+        flex-basis: 390px;
+    }
+
+    .did-agent-mount,
+    .did-agent-mount > * {
+        min-height: 390px !important;
+    }
+
+    .agent-content {
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+}
 .agent-content {
     padding: 20px 20px 22px;
 }
@@ -600,6 +631,26 @@ body.agent-open { overflow: hidden; }
 }
 
 @media (max-width: 720px) {
+    
+    .agent-video-card {
+    width: calc(100% - 24px);
+    height: 50vh;
+    min-height: 340px;
+    flex: 0 0 50vh;
+    margin: 0 12px;
+}
+
+.did-agent-mount {
+    min-height: 340px;
+}
+
+.did-agent-mount > * {
+    min-height: 340px !important;
+}
+
+
+
+    
     .agent-overlay {
         align-items: flex-end;
         padding: 0;
@@ -617,4 +668,5 @@ body.agent-open { overflow: hidden; }
     .agent-suggestions { grid-template-columns: 1fr; }
     .agent-suggestions button { min-height: 40px; }
     .agent-open-btn { right: 14px; bottom: 14px; }
+
 }
