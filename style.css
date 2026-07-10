@@ -308,3 +308,68 @@ footer .container { display: block; }
     .container, .projects-container, .contact-container { grid-template-columns: 1fr; }
     #experience, #education, #projects, #militaryservice, #contact { padding-left: 20px; padding-right: 20px; }
 }
+
+/* CENTER NAVIGATION EXACTLY */
+header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+}
+
+.nav-container {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    min-height: 76px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.site-logo {
+    position: absolute;
+    left: 30px;
+}
+
+.nav-container nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+}
+
+.nav-container nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 42px;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 760px) {
+    .nav-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 0;
+    }
+
+    .site-logo {
+        position: static;
+        margin-bottom: 15px;
+    }
+
+    .nav-container nav {
+        position: static;
+        transform: none;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .nav-container nav ul {
+        width: max-content;
+        margin: 0 auto;
+        gap: 24px;
+    }
+}
