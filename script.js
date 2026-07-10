@@ -29,20 +29,16 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.remove("agent-open");
   }
 
-  // פתיחה אוטומטית כשהאתר נטען
   openAgent();
 
-  // סגירה בלחיצה על X
   if (closeButton) {
     closeButton.addEventListener("click", closeAgent);
   }
 
-  // פתיחה מחדש דרך הכפתור
   if (openButton) {
     openButton.addEventListener("click", openAgent);
   }
 
-  // סגירה בלחיצה על הרקע שמחוץ לחלון
   if (overlay) {
     overlay.addEventListener("click", function (event) {
       if (event.target === overlay) {
