@@ -179,7 +179,7 @@ nav a:hover::after, nav a.active::after { width: 100%; }
 /* SECTIONS */
 #experience, #education, #projects, #militaryservice, #contact {
     padding: 48px 30px 64px;
-    text-align: left;
+    text-align: center;
     background: #020817;
     border-bottom: 1px solid #121a2b;
 }
