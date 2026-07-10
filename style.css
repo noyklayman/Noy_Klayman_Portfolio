@@ -192,10 +192,15 @@ nav a:hover::after, nav a.active::after { width: 100%; }
     font-size: 29px;
     font-weight: 800;
 }
-#experience h2::after, #education h2::after, #projects h2::after, #militaryservice h2::after, #contact h2::after {
+#experience h2::after,
+#education h2::after,
+#projects h2::after,
+#militaryservice h2::after,
+#contact h2::after {
     content: "";
     position: absolute;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: 0;
     width: 47px;
     height: 3px;
