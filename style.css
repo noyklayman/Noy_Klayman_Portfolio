@@ -185,6 +185,7 @@ nav a:hover::after, nav a.active::after { width: 100%; }
 }
 #experience h2, #education h2, #projects h2, #militaryservice h2, #contact h2 {
     position: relative;
+    text-align: center;
     max-width: 1260px;
     margin: 0 auto 25px;
     padding-bottom: 12px;
