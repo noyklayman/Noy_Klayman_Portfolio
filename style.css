@@ -637,15 +637,23 @@ body.agent-open { overflow: hidden; }
         padding: 0;
     }
 
-    .agent-panel {
-        width: 100%;
-        height: 94vh;
-        border-radius: 24px 24px 0 0;
-    }
+  .agent-panel {
+    width: 100%;
+    height: 82vh;
+    max-height: 82vh;
+    border-radius: 24px 24px 0 0;
+}
 
     .agent-topbar { padding: 15px 16px; }
-    .agent-video-card { margin: 0 12px; }
-    .agent-content { padding: 16px; }
+    .agent-video-card {
+    margin: 0 12px;
+    height: 42vh;
+    min-height: 280px;
+    flex: 0 0 42vh;
+}
+    .agent-content {
+    padding: 14px 16px 16px;
+}
     .agent-suggestions { grid-template-columns: 1fr; }
     .agent-suggestions button { min-height: 40px; }
     .agent-open-btn { right: 14px; bottom: 14px; }
