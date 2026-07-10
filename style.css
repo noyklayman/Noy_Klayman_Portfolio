@@ -550,21 +550,73 @@ footer {
 /* VIDEO AREA */
 
 #agent-video-container {
+  position: relative;
   width: 100%;
   height: 470px;
-  margin: 0 auto 15px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  margin: 0 auto 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
+
   background:
     radial-gradient(
       circle at center,
       rgba(18, 90, 73, 0.18),
-      rgba(7, 8, 11, 0.95) 70%
+      rgba(7, 8, 11, 0.98) 72%
     );
+
   box-shadow:
     inset 0 0 40px rgba(0, 0, 0, 0.5),
     0 20px 50px rgba(0, 0, 0, 0.25);
+
   overflow: hidden;
+}
+
+#agent-video-container .didagent_target,
+#agent-video-container [data-testid="didagent_root"],
+#agent-video-container did-agent {
+  position: absolute !important;
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: none !important;
+  max-height: none !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  transform: none !important;
+
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+
+  border-radius: 24px !important;
+  overflow: hidden !important;
+
+  z-index: 10 !important;
+}
+
+#agent-video-container video {
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.didagent_target.agent-inside-video {
+  position: absolute !important;
+
+  top: 0 !important;
+  left: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  transform: none !important;
 }
 
 /* SUBTITLES */
