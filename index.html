@@ -279,6 +279,15 @@
 
     <div class="agent-video-card">
       <div id="did-agent-mount" class="did-agent-mount" aria-label="D-ID AI avatar"></div>
+
+      <!-- AI SUBTITLES -->
+      <div
+        id="agent-subtitles"
+        class="agent-subtitles"
+        aria-live="polite"
+        aria-atomic="true">
+        This is a subtitle test
+      </div>
     </div>
 
     <div class="agent-content">
@@ -308,6 +317,30 @@
 </script>
 
 <script src="script.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const subtitles = document.getElementById("agent-subtitles");
+
+    if (!subtitles) {
+      console.error("Subtitle element was not found");
+      return;
+    }
+
+    window.showAgentSubtitle = function (text) {
+      if (!text) return;
+      subtitles.textContent = text;
+      subtitles.classList.add("show");
+    };
+
+    window.hideAgentSubtitle = function () {
+      subtitles.classList.remove("show");
+    };
+
+    // Temporary test so you can confirm that the subtitle box is visible.
+    window.showAgentSubtitle("Hello! I'm Noy's AI assistant. Ask me anything about her projects.");
+  });
+</script>
 
 </body>
 </html>
