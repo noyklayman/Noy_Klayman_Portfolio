@@ -420,8 +420,7 @@ footer {
 }
 
 /* =====================================================
-   AI AVATAR
-   Added after the original portfolio styles
+   AI ASSISTANT
 ===================================================== */
 
 .hidden {
@@ -440,8 +439,8 @@ body.agent-open {
     align-items: center;
     justify-content: center;
     padding: 24px;
-    background: rgba(2, 6, 23, 0.72);
-    backdrop-filter: blur(7px);
+    background: rgba(2, 6, 23, 0.76);
+    backdrop-filter: blur(9px);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -455,17 +454,17 @@ body.agent-open {
 }
 
 .agent-window {
-    width: min(760px, 96vw);
-    max-height: 94vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    color: #e5e7eb;
-    background: rgba(15, 23, 42, 0.98);
+    width: min(980px, 96vw);
+    height: min(680px, 92vh);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     border: 1px solid rgba(148, 163, 184, 0.26);
     border-radius: 28px;
-    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.58), 0 0 42px rgba(56, 189, 248, 0.12);
-    transform: translateY(22px) scale(0.98);
-    transition: transform 0.28s ease;
+    background: #0b1220;
+    box-shadow: 0 35px 100px rgba(0, 0, 0, 0.62), 0 0 45px rgba(56, 189, 248, 0.12);
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.25s ease;
 }
 
 .agent-overlay.active .agent-window {
@@ -479,10 +478,12 @@ body.agent-open {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    padding: 22px 24px 16px;
-    background: transparent;
+    gap: 18px;
+    flex: 0 0 auto;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
     border: 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
     backdrop-filter: none;
 }
 
@@ -490,12 +491,13 @@ body.agent-open {
     display: flex;
     align-items: center;
     gap: 12px;
+    min-width: 0;
 }
 
 .agent-heading h2 {
     margin: 0 0 4px;
     color: #ffffff;
-    font-size: 22px;
+    font-size: 21px;
     line-height: 1.2;
 }
 
@@ -521,150 +523,43 @@ body.agent-open {
     place-items: center;
     flex: 0 0 auto;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.13);
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.07);
     color: #ffffff;
-    font-size: 28px;
+    font-size: 27px;
     line-height: 1;
     cursor: pointer;
     transition: 0.2s ease;
 }
 
 .agent-close-btn:hover {
-    background: rgba(239, 68, 68, 0.88);
+    background: #ef4444;
     transform: rotate(90deg);
 }
 
-.agent-language-switch {
-    display: flex;
-    gap: 5px;
-    width: calc(100% - 48px);
-    margin: 0 24px 18px;
-    padding: 5px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.06);
-}
-
-.agent-language-btn {
-    flex: 1;
-    min-height: 42px;
-    border: 0;
-    border-radius: 10px;
-    background: transparent;
-    color: #94a3b8;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.agent-language-btn.active {
-    color: #ffffff;
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.28);
-}
-
-.agent-video-shell {
-    position: relative;
-    width: calc(100% - 48px);
-    height: 430px;
-    margin: 0 24px;
-    overflow: hidden;
-    isolation: isolate;
-    border: 1px solid rgba(148, 163, 184, 0.25);
-    border-radius: 22px;
-    background: radial-gradient(circle at center, #1e3a5f 0%, #0b1120 58%, #020617 100%);
-    box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.28), 0 18px 45px rgba(0, 0, 0, 0.34);
+.agent-content {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 14px;
+    background: radial-gradient(circle at top, #172554 0%, #0b1220 48%, #020617 100%);
 }
 
 .did-agent-mount {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
     width: 100%;
     height: 100%;
+    min-height: 0;
     overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 20px;
+    background: #050914;
 }
 
+/* D-ID injects its full interface into this container. */
 .did-agent-mount > * {
     width: 100% !important;
     height: 100% !important;
-}
-
-.agent-placeholder {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    color: #cbd5e1;
-    text-align: center;
-    pointer-events: none;
-}
-
-.agent-placeholder-badge {
-    width: 110px;
-    height: 110px;
-    display: grid;
-    place-items: center;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    color: #ffffff;
-    font-size: 32px;
-    font-weight: 800;
-    box-shadow: 0 0 0 12px rgba(37, 99, 235, 0.12), 0 0 42px rgba(124, 58, 237, 0.42);
-}
-
-.agent-placeholder p {
-    margin: 0;
-    color: #cbd5e1;
-}
-
-.agent-loading {
-    position: absolute;
-    top: 16px;
-    left: 50%;
-    z-index: 7;
-    display: flex;
-    gap: 6px;
-    padding: 9px 14px;
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.68);
-    transform: translateX(-50%);
-    pointer-events: none;
-}
-
-.agent-loading span {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #ffffff;
-    animation: agent-dot 1.2s infinite ease-in-out;
-}
-
-.agent-loading span:nth-child(2) { animation-delay: 0.15s; }
-.agent-loading span:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes agent-dot {
-    0%, 60%, 100% { opacity: 0.45; transform: translateY(0); }
-    30% { opacity: 1; transform: translateY(-6px); }
-}
-
-.agent-help {
-    padding: 18px 24px 24px;
-    text-align: center;
-}
-
-.agent-help p {
-    margin: 0;
-    color: #cbd5e1;
-    font-size: 15px;
-    line-height: 1.5;
+    min-height: 100% !important;
 }
 
 .agent-open-btn {
@@ -675,25 +570,35 @@ body.agent-open {
     display: flex;
     align-items: center;
     gap: 10px;
-    min-height: 56px;
+    min-height: 58px;
     padding: 12px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 999px;
     background: linear-gradient(135deg, #2563eb, #7c3aed);
     color: #ffffff;
     font-size: 15px;
     font-weight: 700;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45);
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .agent-open-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 20px 42px rgba(0, 0, 0, 0.48);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.52);
 }
 
-@media (max-width: 650px) {
+.agent-open-icon {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 18px;
+}
+
+@media (max-width: 700px) {
     .agent-overlay {
         align-items: flex-end;
         padding: 0;
@@ -701,66 +606,33 @@ body.agent-open {
 
     .agent-window {
         width: 100%;
-        max-height: 96vh;
+        height: 94vh;
         border-radius: 24px 24px 0 0;
     }
 
     .agent-header {
-        padding: 18px 18px 14px;
+        padding: 15px 16px;
     }
 
     .agent-heading h2 {
-        font-size: 19px;
+        font-size: 18px;
     }
 
-    .agent-language-switch,
-    .agent-video-shell {
-        width: calc(100% - 36px);
-        margin-right: 18px;
-        margin-left: 18px;
+    .agent-heading p {
+        font-size: 12px;
     }
 
-    .agent-video-shell {
-        height: min(58vh, 500px);
+    .agent-content {
+        padding: 8px;
+    }
+
+    .did-agent-mount {
+        border-radius: 16px;
     }
 
     .agent-open-btn {
         right: 14px;
         bottom: 14px;
+        padding: 11px 15px;
     }
-
-    #agent-open-text {
-        display: none;
-    }
-}
-
-#agent-video-shell {
-  position: relative;
-  width: calc(100% - 48px);
-  height: 520px;
-  margin: 0 24px 24px;
-  overflow: hidden;
-  border-radius: 22px;
-  background: #050914;
-}
-
-#did-agent-mount {
-  width: 100%;
-  height: 100%;
-  min-height: 520px;
-  overflow: hidden;
-  border-radius: 22px;
-}
-
-#did-agent-mount > * {
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 520px !important;
-}
-
-.agent-placeholder,
-.agent-loading,
-#agent-placeholder,
-#agent-loading {
-  display: none !important;
 }
