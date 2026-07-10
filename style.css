@@ -660,10 +660,30 @@ body.agent-open { overflow: hidden; }
 
 }
 
+.box {
+    text-align: left;
+}
+
+.box h3 {
+    text-align: left;
+}
+
+.box ul {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.box li {
+    text-align: left;
+}
+
+.project-card {
+    text-align: center;
+}
+
 .project-description {
     display: flex;
     flex-direction: column;
-    flex: 1;
     align-items: center;
     text-align: center;
 }
