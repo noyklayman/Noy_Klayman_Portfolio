@@ -624,19 +624,6 @@ footer {
     overflow: hidden;
   }
 
-  #agent-video-container did-agent {
-    position: relative !important;
-
-    width: 100% !important;
-    height: 405px !important;
-
-    inset: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-
-    display: block !important;
-  }
-
   .agent-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -742,9 +729,6 @@ footer {
     font-weight: 300;
   }
 
-
-  /* התאמה לטלפון */
-
   @media (max-width: 600px) {
     #agent-overlay {
       padding: 0;
@@ -787,4 +771,65 @@ footer {
       bottom: 18px;
     }
   }
+
+body:not(.agent-open) did-agent {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+body.agent-open did-agent {
+  position: fixed !important;
+
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  transform: translate(-50%, -43%) !important;
+
+  width: min(560px, 88vw) !important;
+  height: 470px !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+
+  z-index: 2147483647 !important;
+}
+
+#agent-video-container {
+  width: 100%;
+  height: 470px;
+
+  margin: 0 auto 25px;
+
+  border-radius: 24px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(18, 90, 73, 0.18),
+      rgba(7, 8, 11, 0.95) 70%
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  body.agent-open did-agent {
+    top: 50% !important;
+
+    width: 94vw !important;
+    height: 440px !important;
+
+    transform: translate(-50%, -42%) !important;
+  }
+
+  #agent-video-container {
+    height: 440px;
+  }
+}
 </style>
