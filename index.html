@@ -11,7 +11,9 @@
 </head>
 <body>
     <header>
-        <nav>
+        <div class="nav-container">
+          <a class="site-logo" href="#home">Noy Klayman</a>
+          <nav>
             <ul>
                 <li><a href="#home">About Me</a></li>
                 <li><a href="#experience">Experience</a></li>
@@ -20,7 +22,8 @@
                 <li><a href="#militaryservice">Military Service</a></li>
                 <li><a href="#contact">Contact </a></li>
             </ul>
-        </nav>
+          </nav>
+        </div>
     </header>
 
     <section id="home">
@@ -29,8 +32,8 @@
           <img src="./me.jpg" alt="me" width="200" class="profile-img">
         </div>
         <div class="home-text">
-          <h1>Hi, I'm Noy Klayman</h1>
-          <p>Backend & Ai Engineer</p>
+          <h1><span class="intro-line">Hi, I'm</span><span class="name-highlight">Noy Klayman</span></h1>
+          <p class="job-title">Backend & AI Engineer</p>
           <p>I am an AI Engineer focused on building intelligent applications and conversational AI.<br/>
               Passionate about innovation, I enjoy creating scalable solutions that combine cutting-edge technologies with exceptional user experiences.<br/>
 			  Committed to continuous learning, I enjoy solving complex challenges and transforming innovative ideas into intelligent software solutions.</p>
@@ -45,7 +48,7 @@
         <h2>Experience</h2>
         <div class="container">
             <div class="box">
-              <h3>Programming Languages</h3>
+              <h3><i class="fa-solid fa-code"></i> Programming Languages</h3>
               <ul>   
                 <li>Java</li>
                 <li>Python</li>
@@ -55,7 +58,7 @@
               </ul>
             </div>
             <div class="box">
-              <h3>Frameworks</h3>
+              <h3><i class="fa-solid fa-cube"></i> Frameworks</h3>
               <ul>
                 <li>Spring Boot</li>        
 				<li>Spring WebFlux</li>   
@@ -66,7 +69,7 @@
               </ul>
             </div>
             <div class="box">
-              <h3>Databases</h3>
+              <h3><i class="fa-solid fa-database"></i> Databases</h3>
               <ul>
                 <li>SQL</li>
                 <li>MongoDB</li>
@@ -77,7 +80,7 @@
               </ul>
             </div>
             <div class="box">
-              <h3>Tools & Platforms</h3>
+              <h3><i class="fa-solid fa-gear"></i> Tools & Platforms</h3>
               <ul>               
 				<li>Docker</li>
                 <li>Git & GitHub</li>
@@ -224,16 +227,18 @@
   <span>Open AI Assistant</span>
 </button>
 
-<script type="module"
-      src="https://agent.d-id.com/v2/index.js"
-      data-mode="fabio"
-      data-client-key="ck__PdCCbrPp2hIWR_oDbfoq"
-      data-agent-id="v2_agt_yw0XxE_Z"
-      data-name="did-agent"
-      data-monitor="true"
-      data-orientation="horizontal"
-      data-position="right"
-      data-open-mode="expanded">
+<script
+  type="module"
+  src="https://agent.d-id.com/v2/index.js"
+  data-mode="full"
+  data-target-id="did-agent-mount"
+  data-client-key="ck__PdCCbrPp2hIWR_oDbfoq"
+  data-agent-id="v2_agt_yw0XxE_Z"
+  data-name="did-agent"
+  data-monitor="true"
+  data-orientation="horizontal"
+  data-open-mode="expanded"
+  data-auto-connect="true">
 </script>
 
 <script src="script.js"></script>
