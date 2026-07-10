@@ -273,9 +273,29 @@ nav a:hover::after, nav a.active::after { width: 100%; }
     box-shadow: 0 16px 34px rgba(0,0,0,.24);
     transition: .22s ease;
 }
-.education-card { padding: 30px; text-align: left; }
-.education-card-image img { width: 110px; margin-bottom: 18px; }
+.education-card { padding: 40px; text-align: center; }
+.education-card-image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.education-card-image img { width: 120px; height: auto;}
 .education-card h3, .military-container h3, .contact-card h3, .project-card h3 { color: #fff; }
+.education-card h3 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+.education-card ul {
+    display: inline-block;
+    text-align: left;
+    margin: 0 auto;
+    padding-left: 25px;
+}
+
+.education-card li {
+    line-height: 1.8;
+    margin-bottom: 12px;
+}
 .education-card ul, .military-container p, .contact-card p, .project-description p { color: #cbd5e1; line-height: 1.65; }
 .projects-container { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
 .project-card { min-height: 340px; padding: 25px; display: flex; flex-direction: column; }
