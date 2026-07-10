@@ -761,12 +761,6 @@ footer {
 
   body.agent-open did-agent,
   body.agent-open .didagent_target,
-  body.agent-open [data-testid="didagent_root"] {
-    top: 50% !important;
-    width: 94vw !important;
-    height: 430px !important;
-    transform: translate(-50%, -36%) !important;
-  }
 
   #agent-subtitles {
     width: 94%;
