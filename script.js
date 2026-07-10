@@ -1,56 +1,60 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
+  const overlay = document.getElementById("agent-overlay");
+  const openButton = document.getElementById("agent-open-btn");
+  const closeButton = document.getElementById("agent-close-btn");
 
-    const overlay = document.getElementById("agent-overlay");
-    const openBtn = document.getElementById("agent-open-btn");
-    const closeBtn = document.getElementById("agent-close-btn");
+  function openAgent() {
+    if (!overlay) return;
 
-    function openAgent() {
-        overlay.classList.add("active");
-        overlay.setAttribute("aria-hidden", "false");
+    overlay.classList.add("active");
+    overlay.setAttribute("aria-hidden", "false");
 
-        if (openBtn) {
-            openBtn.classList.add("hidden");
-        }
-
-        document.body.classList.add("agent-open");
+    if (openButton) {
+      openButton.classList.add("hidden");
     }
 
-    function closeAgent() {
-        overlay.classList.remove("active");
-        overlay.setAttribute("aria-hidden", "true");
+    document.body.classList.add("agent-open");
+  }
 
-        if (openBtn) {
-            openBtn.classList.remove("hidden");
-        }
+  function closeAgent() {
+    if (!overlay) return;
 
-        document.body.classList.remove("agent-open");
+    overlay.classList.remove("active");
+    overlay.setAttribute("aria-hidden", "true");
+
+    if (openButton) {
+      openButton.classList.remove("hidden");
     }
 
-    // נפתח אוטומטית כשהאתר נטען
-    openAgent();
+    document.body.classList.remove("agent-open");
+  }
 
-    // סגירה
-    if (closeBtn) {
-        closeBtn.addEventListener("click", closeAgent);
-    }
+  // פתיחה אוטומטית כשהאתר נטען
+  openAgent();
 
-    // פתיחה מחדש
-    if (openBtn) {
-        openBtn.addEventListener("click", openAgent);
-    }
+  // סגירה בלחיצה על X
+  if (closeButton) {
+    closeButton.addEventListener("click", closeAgent);
+  }
 
-    // סגירה בלחיצה על הרקע
-    overlay.addEventListener("click", (e) => {
-        if (e.target === overlay) {
-            closeAgent();
-        }
+  // פתיחה מחדש דרך הכפתור
+  if (openButton) {
+    openButton.addEventListener("click", openAgent);
+  }
+
+  // סגירה בלחיצה על הרקע שמחוץ לחלון
+  if (overlay) {
+    overlay.addEventListener("click", function (event) {
+      if (event.target === overlay) {
+        closeAgent();
+      }
     });
+  }
 
-    // סגירה ב-ESC
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-            closeAgent();
-        }
-    });
-
+  // סגירה בלחיצה על Esc
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeAgent();
+    }
+  });
 });
