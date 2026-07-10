@@ -277,17 +277,6 @@
       <button id="agent-close-btn" class="agent-close-btn" type="button" aria-label="Close AI assistant">×</button>
     </div>
 
-  <div class="agent-video-card">
-  <div
-    id="did-agent-mount"
-    class="did-agent-mount"
-    aria-label="D-ID AI avatar">
-  </div>
-
-  <div id="agent-subtitles" class="agent-subtitles">
-    This is a subtitle test
-  </div>
-</div>
 
       <!-- AI SUBTITLES -->
       <div
@@ -311,6 +300,64 @@
   <span>Open AI Assistant</span>
 </button>
 
+
+	<div
+  id="agent-video-wrapper"
+  style="
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 28px;
+  "
+>
+  <div
+    id="did-agent-mount"
+    class="did-agent-mount"
+    aria-label="D-ID AI avatar"
+    style="
+      position: relative;
+      width: 100%;
+      z-index: 1;
+    "
+  ></div>
+
+  <div
+    id="agent-subtitles"
+    style="
+      position: absolute;
+      left: 50%;
+      bottom: 25px;
+      transform: translateX(-50%);
+      z-index: 2147483647;
+
+      display: block;
+      visibility: visible;
+      opacity: 1;
+
+      width: calc(100% - 60px);
+      max-width: 680px;
+      padding: 14px 20px;
+
+      background: rgba(0, 0, 0, 0.82);
+      color: white;
+
+      font-family: Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.4;
+      text-align: center;
+
+      border: 2px solid white;
+      border-radius: 14px;
+      box-sizing: border-box;
+      pointer-events: none;
+    "
+  >
+    This is a subtitle test
+  </div>
+</div>
+
+	
 <script
   type="module"
   src="https://agent.d-id.com/v2/index.js"
