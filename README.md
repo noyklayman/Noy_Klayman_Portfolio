@@ -1,4 +1,5 @@
 # 💬 My Portfolio Project
 
-URL: https://noyk.netlify.app/
-A personal portfolio site featuring a talking-avatar AI chatbot (powered by D-ID + a custom RAG backend) that answers questions about my work in English and Hebrew.
+URL: https://noyk.netlify.app
+
+Developed a personal portfolio website featuring an AI-powered conversational avatar with a custom RAG backend, enabling visitors to ask questions about my experience, projects, and skills in both English and Hebrew.
