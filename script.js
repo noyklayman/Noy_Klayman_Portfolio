@@ -29,16 +29,20 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.remove("agent-open");
   }
 
+  // פתיחה אוטומטית
   openAgent();
 
+  // סגירה
   if (closeButton) {
     closeButton.addEventListener("click", closeAgent);
   }
 
+  // פתיחה מחדש
   if (openButton) {
     openButton.addEventListener("click", openAgent);
   }
 
+  // סגירה בלחיצה מחוץ לחלון
   if (overlay) {
     overlay.addEventListener("click", function (event) {
       if (event.target === overlay) {
@@ -47,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // סגירה בלחיצה על Esc
+  // Esc
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
       closeAgent();
