@@ -151,7 +151,7 @@ nav a:hover::after, nav a.active::after { width: 100%; }
     font-size: 16px;
     line-height: 1.6;
 }
-.download-btn, .github-btn, .button-contact {
+.download-btn, .github-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -267,12 +267,12 @@ nav a:hover::after, nav a.active::after { width: 100%; }
 }
 
 /* CONTENT CARDS */
-.education-container, .projects-container, .military-container, .contact-container {
+.education-container, .projects-container, .military-container{
     max-width: 1260px;
     margin-left: auto;
     margin-right: auto;
 }
-.education-card, .military-container, .contact-card, .project-card {
+.education-card, .military-container, .project-card {
     background: linear-gradient(180deg, #0b1424 0%, #09111f 100%);
     border: 1px solid #1f2a3d;
     border-radius: 9px;
@@ -286,7 +286,7 @@ nav a:hover::after, nav a.active::after { width: 100%; }
     margin-bottom: 20px;
 }
 .education-card-image img { width: 120px; height: auto;}
-.military-container h3, .contact-card h3, .project-card h3 { color: #fff; }
+.military-container h3, .project-card h3 { color: #fff; }
 .education-card h3 {
     text-align: center;
     margin-bottom: 25px;
@@ -302,7 +302,7 @@ nav a:hover::after, nav a.active::after { width: 100%; }
     line-height: 1.8;
     margin-bottom: 12px;
 }
-.military-container p, .contact-card p, .project-description p { color: #cbd5e1; line-height: 1.65; }
+.military-container p, .project-description p { color: #cbd5e1; line-height: 1.65; }
 .projects-container { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
 .project-card { min-height: 340px; padding: 25px; display: flex; flex-direction: column; }
 .project-card h3 { margin: 0 0 17px; font-size: 20px; }
@@ -310,8 +310,6 @@ nav a:hover::after, nav a.active::after { width: 100%; }
 .project-description .github-btn { align-self: center; margin-top: auto; }
 .military-container { padding: 30px; }
 .military-container h3 { margin-top: 0; }
-.contact-container { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
-.contact-card { padding: 26px; text-align: center; }
 footer { padding: 20px; color: #94a3b8; background: #01040d; text-align: center; }
 footer .container { display: block; }
 
@@ -331,7 +329,7 @@ footer .container { display: block; }
     .profile-img { width: 205px; height: 205px; }
     .intro-line { font-size: 32px; }
     .name-highlight { font-size: 41px; }
-    .container, .projects-container, .contact-container { grid-template-columns: 1fr; }
+    .container, .projects-container { grid-template-columns: 1fr; }
     #experience, #education, #projects, #militaryservice, #contact { padding-left: 20px; padding-right: 20px; }
 }
 
@@ -397,6 +395,298 @@ header {
         width: max-content;
         margin: 0 auto;
         gap: 24px;
+    }
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+#contact {
+    padding: 58px 16px 72px;
+    background: #020817;
+    border-bottom: 1px solid #121a2b;
+}
+
+#contact h2 {
+    position: relative;
+    max-width: 1260px;
+    margin: 0 auto 38px;
+    padding-bottom: 18px;
+    color: #ffffff;
+    font-size: 38px;
+    font-weight: 800;
+    text-align: center;
+}
+
+#contact h2::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 70px;
+    height: 4px;
+    border-radius: 999px;
+    background: #3b82f6;
+    transform: translateX(-50%);
+}
+
+.contact-container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.contact-card {
+    position: relative;
+    min-height: 360px;
+    padding: 26px 18px 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden;
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at 50% 18%,
+            rgba(37, 99, 235, 0.12),
+            transparent 38%
+        ),
+        linear-gradient(
+            180deg,
+            #0b1424 0%,
+            #08111f 100%
+        );
+
+    border: 1px solid #263247;
+    border-radius: 14px;
+
+    box-shadow:
+        0 18px 36px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(59, 130, 246, 0.65);
+
+    box-shadow:
+        0 25px 55px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(37, 99, 235, 0.12);
+}
+
+.contact-icon {
+    width: 106px;
+    height: 106px;
+    margin-bottom: 24px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid currentColor;
+    border-radius: 50%;
+
+    font-size: 43px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.contact-card:hover .contact-icon {
+    transform: scale(1.07);
+}
+
+.contact-card h3 {
+    margin: 0 0 12px;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.contact-card p {
+    min-height: 52px;
+    margin: 0 0 24px;
+
+    color: #b8c2d4;
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.contact-action {
+    width: 100%;
+    min-height: 49px;
+    margin-top: auto;
+    padding: 12px 14px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 800;
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+.contact-action i {
+    font-size: 11px;
+}
+
+.contact-action:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+
+/* EMAIL */
+
+.contact-email .contact-icon {
+    color: #4f83ff;
+    background: rgba(37, 99, 235, 0.15);
+
+    box-shadow:
+        0 0 34px rgba(37, 99, 235, 0.28),
+        inset 0 0 24px rgba(37, 99, 235, 0.12);
+}
+
+.contact-email .contact-action {
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    border-color: #5680ff;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
+}
+
+/* WHATSAPP */
+
+.contact-whatsapp .contact-icon {
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.13);
+
+    box-shadow:
+        0 0 34px rgba(34, 197, 94, 0.24),
+        inset 0 0 24px rgba(34, 197, 94, 0.1);
+}
+
+.contact-whatsapp .contact-action {
+    background: linear-gradient(
+        135deg,
+        #059669,
+        #15803d
+    );
+
+    border-color: #22c55e;
+    box-shadow: 0 10px 24px rgba(34, 197, 94, 0.24);
+}
+
+/* LINKEDIN */
+
+.contact-linkedin .contact-icon {
+    color: #38a3ff;
+    background: rgba(14, 165, 233, 0.13);
+
+    box-shadow:
+        0 0 34px rgba(14, 165, 233, 0.25),
+        inset 0 0 24px rgba(14, 165, 233, 0.1);
+}
+
+.contact-linkedin .contact-action {
+    background: linear-gradient(
+        135deg,
+        #0284c7,
+        #0369a1
+    );
+
+    border-color: #38bdf8;
+    box-shadow: 0 10px 24px rgba(14, 165, 233, 0.24);
+}
+
+/* GITHUB */
+
+.contact-github .contact-icon {
+    color: #f8fafc;
+    background: rgba(255, 255, 255, 0.055);
+
+    border-color: rgba(255, 255, 255, 0.28);
+
+    box-shadow:
+        0 0 30px rgba(255, 255, 255, 0.08),
+        inset 0 0 24px rgba(255, 255, 255, 0.035);
+}
+
+.contact-github .contact-action {
+    background: linear-gradient(
+        135deg,
+        #182131,
+        #101827
+    );
+
+    border-color: #64748b;
+
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* TABLET */
+
+@media (max-width: 1050px) {
+    .contact-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 620px) {
+    #contact {
+        padding: 48px 18px 60px;
+    }
+
+    #contact h2 {
+        margin-bottom: 30px;
+        font-size: 32px;
+    }
+
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .contact-card {
+        min-height: 330px;
+        padding: 24px 18px 18px;
+    }
+
+    .contact-icon {
+        width: 92px;
+        height: 92px;
+        margin-bottom: 20px;
+        font-size: 38px;
     }
 }
 
