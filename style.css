@@ -1298,3 +1298,60 @@ body.agent-open {
     .agent-quick-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .language-button { min-width: 95px; }
 }
+
+/* Reliable interaction layer for the custom AI controls */
+.agent-topbar,
+.agent-language-switch,
+.agent-content,
+.agent-open-btn {
+    position: relative;
+    z-index: 50;
+    pointer-events: auto;
+}
+
+.agent-close-btn,
+.language-button,
+.agent-quick-actions button,
+.agent-control-btn,
+.agent-open-btn {
+    pointer-events: auto !important;
+    touch-action: manipulation;
+}
+
+.agent-control-btn.muted {
+    opacity: 0.68;
+}
+
+.agent-status-dot[data-state="connecting"],
+.agent-status-dot[data-state="thinking"] {
+    background: #f59e0b;
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.9);
+}
+
+.agent-status-dot[data-state="speaking"] {
+    background: #3b82f6;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.95);
+}
+
+.agent-status-dot[data-state="error"] {
+    background: #ef4444;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.95);
+}
+
+
+/* =====================================================
+   SUBTITLE VISIBILITY FIX
+   Hide the black subtitle bar when there is no text.
+===================================================== */
+.agent-subtitles,
+.agent-subtitles:empty {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.agent-subtitles.show:not(:empty) {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
