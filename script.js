@@ -71,13 +71,14 @@
         micOn: "🎤 Microphone",
         micOff: "🔇 Microphone muted",
         languageMessage: "The conversation will continue in English. You can speak in English.",
-        labels: ["💼 Experience", "💻 Projects", "🧠 Skills", "🎓 Education", "📞 Contact"],
+        labels: ["💼 Experience", "💻 Projects", "🧠 Skills", "🎓 Education", "🪖 Military", "📞 Contact"],
         topics: {
-          experience: "Noy has hands-on experience in backend development and AI applications using Java, Spring Boot, Python, REST APIs and distributed systems.",
-          projects: "Noy's main projects include a distributed search engine with Kafka and Elasticsearch, a TinyURL platform, and a student management system.",
-          skills: "Noy works with Java, Python, Spring Boot, React, Docker, Kafka, Redis, MongoDB, PostgreSQL, Elasticsearch and AI technologies.",
-          education: "Noy completed a Computer Science degree and developed a strong foundation in programming, algorithms, software systems and problem solving.",
-          contact: "You can contact Noy by email, WhatsApp, LinkedIn or GitHub through the contact section of this website."
+          experience: "Noy is an AI Engineer and Backend Developer with hands-on experience building intelligent applications, RESTful APIs, distributed systems, and scalable backend solutions. She has developed projects using Java, Spring Boot, Python, Docker, Kafka, Redis, MongoDB, PostgreSQL, and Elasticsearch, with a strong focus on AI technologies and modern software architecture.",
+          projects: "Noy has built several end-to-end software projects, including a distributed search engine powered by Kafka and Elasticsearch, a scalable TinyURL platform with Redis and MongoDB, a Student Management System using Flask and PostgreSQL, and an AI-powered portfolio assistant capable of interacting with visitors in both English and Hebrew.",
+          skills: "Noy's technical skills include Java, Python, Spring Boot, React, JavaScript, REST APIs, Docker, Kafka, Redis, MongoDB, PostgreSQL, Cassandra, Elasticsearch, Git, AWS, and conversational AI technologies.", 
+          education: "Noy earned a Bachelor's degree in Computer Science, where she built a strong foundation in software engineering, algorithms, object-oriented programming, databases, distributed systems, and problem-solving through both individual and team-based software projects.",
+          military: "Noy served as a Combat Soldier in the mixed-gender Lions of Jordan Battalion in the Israeli Defense Forces. Her military service strengthened her leadership, resilience, teamwork, and ability to perform under pressure.",
+          contact: "If you would like to discuss opportunities, collaborate on a project, or simply get in touch, you can contact Noy via email, WhatsApp, LinkedIn, or GitHub using the Contact section at the bottom of this website."
         }
       }
     };
