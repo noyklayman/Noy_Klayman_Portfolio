@@ -1,228 +1,323 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const overlay = document.getElementById("agent-overlay");
-  const openButton = document.getElementById("agent-open-btn");
-  const closeButton = document.getElementById("agent-close-btn");
-  const stopButton = document.getElementById("agent-stop-btn");
-  const micButton = document.getElementById("agent-mic-btn");
-  const status = document.getElementById("agent-status");
-  const statusDot = document.getElementById("agent-status-dot");
-  const subtitles = document.getElementById("agent-subtitles");
-  const content = document.getElementById("agent-content");
-  const welcomeTitle = document.getElementById("agent-welcome-title");
-  const helpText = document.getElementById("agent-help-text");
-  const openLabel = document.getElementById("agent-open-label");
-  const heButton = document.getElementById("language-he");
-  const enButton = document.getElementById("language-en");
-  const quickButtons = Array.from(document.querySelectorAll(".agent-quick-actions button"));
+(function () {
+  "use strict";
 
-  let selectedLanguage = localStorage.getItem("noy-agent-language") || "he";
-  let micMuted = false;
-  let subtitleTimer = null;
+  function initInterface() {
+    const overlay = document.getElementById("agent-overlay");
+    const panel = document.querySelector(".agent-panel");
+    const openButton = document.getElementById("agent-open-btn");
+    const closeButton = document.getElementById("agent-close-btn");
+    const stopButton = document.getElementById("agent-stop-btn");
+    const micButton = document.getElementById("agent-mic-btn");
+    const status = document.getElementById("agent-status");
+    const statusDot = document.getElementById("agent-status-dot");
+    const subtitles = document.getElementById("agent-subtitles");
+    const content = document.getElementById("agent-content");
+    const welcomeTitle = document.getElementById("agent-welcome-title");
+    const helpText = document.getElementById("agent-help-text");
+    const openLabel = document.getElementById("agent-open-label");
+    const heButton = document.getElementById("language-he");
+    const enButton = document.getElementById("language-en");
+    const quickButtons = Array.from(document.querySelectorAll(".agent-quick-actions button"));
 
-  const text = {
-    he: {
-      ready: "מחובר ומוכן לשיחה",
-      connecting: "מתחבר…",
-      speaking: "מדבר…",
-      error: "לא ניתן להתחבר ל-Agent",
-      title: "שלום! אני העוזר האישי של נוי.",
-      help: "דברו או כתבו ישירות בתוך חלון ה-Agent. הוא הוגדר לזהות עברית ואנגלית.",
-      open: "פתיחת העוזר",
-      stop: "■ עצירה",
-      mic: "🎤 מיקרופון",
-      labels: ["💼 ניסיון", "💻 פרויקטים", "🧠 כישורים", "🎓 השכלה", "📞 יצירת קשר"],
-      topics: {
-        experience: "לנוי ניסיון בפיתוח Backend ובבניית יישומי AI. היא עובדת עם Java, Spring Boot, Python, REST APIs ומערכות מבוזרות.",
-        projects: "הפרויקטים המרכזיים של נוי כוללים מנוע חיפוש מבוזר עם Kafka ו-Elasticsearch, מערכת TinyURL ומערכת לניהול סטודנטים.",
-        skills: "הכישורים של נוי כוללים Java, Python, Spring Boot, React, Docker, Kafka, Redis, MongoDB, PostgreSQL, Elasticsearch וכלי AI.",
-        education: "נוי השלימה תואר במדעי המחשב ורכשה בסיס חזק בתכנות, אלגוריתמים, מערכות תוכנה ופתרון בעיות.",
-        contact: "אפשר ליצור קשר עם נוי דרך האימייל, WhatsApp, LinkedIn או GitHub המופיעים באזור יצירת הקשר באתר."
-      }
-    },
-    en: {
-      ready: "Connected and ready to chat",
-      connecting: "Connecting…",
-      speaking: "Speaking…",
-      error: "Unable to connect to the Agent",
-      title: "Hello! I’m Noy’s AI assistant.",
-      help: "Speak or type directly inside the Agent window. It is configured to recognize Hebrew and English.",
-      open: "Open AI Assistant",
-      stop: "■ Stop",
-      mic: "🎤 Microphone",
-      labels: ["💼 Experience", "💻 Projects", "🧠 Skills", "🎓 Education", "📞 Contact"],
-      topics: {
-        experience: "Noy has hands-on experience in backend development and AI applications using Java, Spring Boot, Python, REST APIs and distributed systems.",
-        projects: "Noy's main projects include a distributed search engine with Kafka and Elasticsearch, a TinyURL platform, and a student management system.",
-        skills: "Noy works with Java, Python, Spring Boot, React, Docker, Kafka, Redis, MongoDB, PostgreSQL, Elasticsearch and AI technologies.",
-        education: "Noy completed a Computer Science degree and developed a strong foundation in programming, algorithms, software systems and problem solving.",
-        contact: "You can contact Noy by email, WhatsApp, LinkedIn or GitHub through the contact section of this website."
-      }
+    if (!overlay || !openButton || !closeButton) {
+      console.error("AI Assistant: required overlay buttons were not found.");
+      return;
     }
-  };
 
-  function openAgent() {
-    if (!overlay) return;
-    overlay.classList.add("active");
-    overlay.setAttribute("aria-hidden", "false");
-    openButton?.classList.add("hidden");
-    document.body.classList.add("agent-open");
-  }
+    let selectedLanguage = "he";
+    let micMuted = false;
+    let subtitleTimer = null;
+    let api = null;
 
-  function closeAgent() {
-    if (!overlay) return;
-    overlay.classList.remove("active");
-    overlay.setAttribute("aria-hidden", "true");
-    openButton?.classList.remove("hidden");
-    document.body.classList.remove("agent-open");
-  }
+    try {
+      selectedLanguage = window.localStorage.getItem("noy-agent-language") || "he";
+    } catch (error) {
+      console.warn("AI Assistant: localStorage is unavailable; Hebrew will be used by default.");
+    }
 
-  function setStatus(key, stateName) {
-    status.textContent = text[selectedLanguage][key] || key;
-    statusDot.dataset.state = stateName || "ready";
-  }
-
-  function showSubtitle(message, duration = 9000) {
-    clearTimeout(subtitleTimer);
-    subtitles.textContent = message;
-    subtitles.classList.add("show");
-    subtitleTimer = setTimeout(() => subtitles.classList.remove("show"), duration);
-  }
-
-  function getApi() {
-    return window.DID_AGENTS_API || null;
-  }
-
-  function waitForApi(timeout = 12000) {
-    return new Promise((resolve, reject) => {
-      const started = Date.now();
-      const timer = setInterval(() => {
-        const api = getApi();
-        if (api) {
-          clearInterval(timer);
-          resolve(api);
-        } else if (Date.now() - started > timeout) {
-          clearInterval(timer);
-          reject(new Error("D-ID Embed API did not load"));
+    const copy = {
+      he: {
+        ready: "מחובר ומוכן לשיחה",
+        connecting: "מתחבר…",
+        speaking: "מדבר…",
+        thinking: "חושב…",
+        error: "לא ניתן להתחבר ל-Agent",
+        title: "שלום! אני העוזר האישי של נוי.",
+        help: "אפשר לדבר בתוך חלון ה-Agent, או לבחור נושא מהכפתורים.",
+        open: "Open AI Assistant",
+        stop: "■ עצירה",
+        micOn: "🎤 מיקרופון",
+        micOff: "🔇 מיקרופון כבוי",
+        languageMessage: "השיחה תמשיך בעברית. אפשר לדבר בעברית.",
+        labels: ["💼 ניסיון", "💻 פרויקטים", "🧠 כישורים", "🎓 השכלה", "📞 יצירת קשר"],
+        topics: {
+          experience: "לנוי ניסיון בפיתוח Backend ובבניית יישומי AI. היא עובדת עם Java, Spring Boot, Python, REST APIs ומערכות מבוזרות.",
+          projects: "הפרויקטים המרכזיים של נוי כוללים מנוע חיפוש מבוזר עם Kafka ו-Elasticsearch, מערכת TinyURL ומערכת לניהול סטודנטים.",
+          skills: "הכישורים של נוי כוללים Java, Python, Spring Boot, React, Docker, Kafka, Redis, MongoDB, PostgreSQL, Elasticsearch וכלי AI.",
+          education: "נוי השלימה תואר במדעי המחשב ורכשה בסיס חזק בתכנות, אלגוריתמים, מערכות תוכנה ופתרון בעיות.",
+          contact: "אפשר ליצור קשר עם נוי דרך האימייל, WhatsApp, LinkedIn או GitHub המופיעים באזור יצירת הקשר באתר."
         }
-      }, 120);
-    });
-  }
+      },
+      en: {
+        ready: "Connected and ready to chat",
+        connecting: "Connecting…",
+        speaking: "Speaking…",
+        thinking: "Thinking…",
+        error: "Unable to connect to the Agent",
+        title: "Hello! I’m Noy’s AI assistant.",
+        help: "Speak inside the Agent window, or choose one of the suggested topics.",
+        open: "Open AI Assistant",
+        stop: "■ Stop",
+        micOn: "🎤 Microphone",
+        micOff: "🔇 Microphone muted",
+        languageMessage: "The conversation will continue in English. You can speak in English.",
+        labels: ["💼 Experience", "💻 Projects", "🧠 Skills", "🎓 Education", "📞 Contact"],
+        topics: {
+          experience: "Noy has hands-on experience in backend development and AI applications using Java, Spring Boot, Python, REST APIs and distributed systems.",
+          projects: "Noy's main projects include a distributed search engine with Kafka and Elasticsearch, a TinyURL platform, and a student management system.",
+          skills: "Noy works with Java, Python, Spring Boot, React, Docker, Kafka, Redis, MongoDB, PostgreSQL, Elasticsearch and AI technologies.",
+          education: "Noy completed a Computer Science degree and developed a strong foundation in programming, algorithms, software systems and problem solving.",
+          contact: "You can contact Noy by email, WhatsApp, LinkedIn or GitHub through the contact section of this website."
+        }
+      }
+    };
 
-  function applyLanguage(language, announce = false) {
-    selectedLanguage = language;
-    localStorage.setItem("noy-agent-language", language);
-    const isHebrew = language === "he";
-    heButton.classList.toggle("active", isHebrew);
-    enButton.classList.toggle("active", !isHebrew);
-    content.dir = isHebrew ? "rtl" : "ltr";
-    subtitles.dir = isHebrew ? "rtl" : "ltr";
-    welcomeTitle.textContent = text[language].title;
-    helpText.textContent = text[language].help;
-    openLabel.textContent = text[language].open;
-    stopButton.textContent = text[language].stop;
-    micButton.textContent = text[language].mic;
-    quickButtons.forEach((button, index) => button.textContent = text[language].labels[index]);
-    setStatus("ready", "ready");
-
-    if (announce) {
-      const message = isHebrew
-        ? "השיחה תמשיך בעברית. אפשר לדבר או לכתוב לי בעברית."
-        : "The conversation will continue in English. You can speak or type in English.";
-      speakText(message);
+    function openAgent() {
+      overlay.classList.add("active");
+      overlay.setAttribute("aria-hidden", "false");
+      openButton.classList.add("hidden");
+      document.body.classList.add("agent-open");
+      closeButton.focus({ preventScroll: true });
     }
-  }
 
-  async function speakText(message) {
-    try {
-      const api = await waitForApi();
-      setStatus("speaking", "speaking");
-      showSubtitle(message);
-      await api.functions.speak({ type: "text", input: message });
-    } catch (error) {
-      console.error(error);
-      setStatus("error", "error");
-      showSubtitle(text[selectedLanguage].error, 6000);
+    function closeAgent() {
+      overlay.classList.remove("active");
+      overlay.setAttribute("aria-hidden", "true");
+      openButton.classList.remove("hidden");
+      document.body.classList.remove("agent-open");
+      openButton.focus({ preventScroll: true });
     }
-  }
 
-  async function initializeEmbedControls() {
-    setStatus("connecting", "connecting");
-    try {
-      const api = await waitForApi();
-      api.configure({
-        orientation: "vertical",
-        openMode: "expanded",
-        showChatToggle: true,
-        showMicToggle: true,
-        showRestartButton: true,
-        autoConnect: true
-      });
-
-      api.events.on("connection", ({ state }) => {
-        if (state === "connected") setStatus("ready", "ready");
-        else if (["new", "connecting"].includes(state)) setStatus("connecting", "connecting");
-        else setStatus("error", "error");
-      });
-
-      api.events.on("agentActivity", ({ state }) => {
-        const normalized = String(state || "").toLowerCase();
-        if (normalized.includes("speak") || normalized.includes("talk")) setStatus("speaking", "speaking");
-        else if (normalized.includes("idle") || normalized.includes("listen")) setStatus("ready", "ready");
-      });
-
-      api.events.on("error", ({ error }) => {
-        console.error("D-ID Embed error:", error);
-        setStatus("error", "error");
-      });
-    } catch (error) {
-      console.error(error);
-      setStatus("error", "error");
+    function setStatus(key, stateName) {
+      if (status) status.textContent = copy[selectedLanguage][key] || key;
+      if (statusDot) statusDot.dataset.state = stateName || "ready";
     }
-  }
 
-  heButton.addEventListener("click", () => applyLanguage("he", true));
-  enButton.addEventListener("click", () => applyLanguage("en", true));
+    function showSubtitle(message, duration) {
+      if (!subtitles) return;
+      window.clearTimeout(subtitleTimer);
+      subtitles.textContent = message;
+      subtitles.classList.add("show");
+      subtitleTimer = window.setTimeout(function () {
+        subtitles.classList.remove("show");
+        subtitles.textContent = "";
+      }, duration || 9000);
+    }
 
-  quickButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const topic = button.dataset.topic;
-      speakText(text[selectedLanguage].topics[topic]);
-    });
-  });
-
-  stopButton.addEventListener("click", async () => {
-    try {
-      const api = await waitForApi();
-      await api.functions.interrupt();
+    function hideSubtitle() {
+      if (!subtitles) return;
+      window.clearTimeout(subtitleTimer);
       subtitles.classList.remove("show");
-      setStatus("ready", "ready");
-    } catch (error) {
-      console.error(error);
+      subtitles.textContent = "";
     }
-  });
 
-  micButton.addEventListener("click", async () => {
-    try {
-      const api = await waitForApi();
-      micMuted = !micMuted;
-      await api.functions.toggleMicState(micMuted);
-      micButton.setAttribute("aria-pressed", String(!micMuted));
-      micButton.style.opacity = micMuted ? "0.65" : "1";
-    } catch (error) {
-      console.error(error);
+    function saveLanguage(language) {
+      try {
+        window.localStorage.setItem("noy-agent-language", language);
+      } catch (error) {
+        // The interface still works when storage is blocked.
+      }
     }
-  });
 
-  closeButton?.addEventListener("click", closeAgent);
-  openButton?.addEventListener("click", openAgent);
-  overlay?.addEventListener("click", (event) => {
-    if (event.target === overlay) closeAgent();
-  });
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeAgent();
-  });
+    function applyLanguage(language, announce) {
+      selectedLanguage = language === "en" ? "en" : "he";
+      saveLanguage(selectedLanguage);
+      const isHebrew = selectedLanguage === "he";
 
-  applyLanguage(selectedLanguage, false);
-  openAgent();
-  initializeEmbedControls();
-});
+      if (heButton) heButton.classList.toggle("active", isHebrew);
+      if (enButton) enButton.classList.toggle("active", !isHebrew);
+      if (content) content.dir = isHebrew ? "rtl" : "ltr";
+      if (subtitles) {
+        subtitles.dir = isHebrew ? "rtl" : "ltr";
+        subtitles.lang = selectedLanguage;
+      }
+      if (welcomeTitle) welcomeTitle.textContent = copy[selectedLanguage].title;
+      if (helpText) helpText.textContent = copy[selectedLanguage].help;
+      if (openLabel) openLabel.textContent = copy[selectedLanguage].open;
+      if (stopButton) stopButton.textContent = copy[selectedLanguage].stop;
+      if (micButton) micButton.textContent = micMuted ? copy[selectedLanguage].micOff : copy[selectedLanguage].micOn;
+      quickButtons.forEach(function (button, index) {
+        button.textContent = copy[selectedLanguage].labels[index];
+      });
+      setStatus(api ? "ready" : "connecting", api ? "ready" : "connecting");
+
+      if (announce) {
+        speakText(copy[selectedLanguage].languageMessage);
+      }
+    }
+
+    function waitForApi(timeout) {
+      return new Promise(function (resolve, reject) {
+        if (window.DID_AGENTS_API) {
+          api = window.DID_AGENTS_API;
+          resolve(api);
+          return;
+        }
+
+        const started = Date.now();
+        const timer = window.setInterval(function () {
+          if (window.DID_AGENTS_API) {
+            window.clearInterval(timer);
+            api = window.DID_AGENTS_API;
+            resolve(api);
+          } else if (Date.now() - started >= (timeout || 20000)) {
+            window.clearInterval(timer);
+            reject(new Error("D-ID Embed API did not load"));
+          }
+        }, 100);
+      });
+    }
+
+    async function speakText(message) {
+      showSubtitle(message, 12000);
+      setStatus("speaking", "speaking");
+
+      try {
+        const currentApi = api || await waitForApi(20000);
+        await currentApi.functions.speak({ type: "text", input: message });
+      } catch (error) {
+        console.error("AI Assistant speak error:", error);
+        setStatus("error", "error");
+        showSubtitle(copy[selectedLanguage].error, 6000);
+      }
+    }
+
+    function bindInterfaceEvents() {
+      closeButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        closeAgent();
+      });
+
+      openButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        openAgent();
+      });
+
+      overlay.addEventListener("click", function (event) {
+        if (event.target === overlay) closeAgent();
+      });
+
+      if (panel) {
+        panel.addEventListener("click", function (event) {
+          event.stopPropagation();
+        });
+      }
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && overlay.classList.contains("active")) {
+          closeAgent();
+        }
+      });
+
+      if (heButton) heButton.addEventListener("click", function () { applyLanguage("he", true); });
+      if (enButton) enButton.addEventListener("click", function () { applyLanguage("en", true); });
+
+      quickButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          const topic = button.dataset.topic;
+          const message = copy[selectedLanguage].topics[topic];
+          if (message) speakText(message);
+        });
+      });
+
+      if (stopButton) {
+        stopButton.addEventListener("click", async function () {
+          hideSubtitle();
+          setStatus("ready", "ready");
+          try {
+            const currentApi = api || await waitForApi(5000);
+            await currentApi.functions.interrupt();
+          } catch (error) {
+            console.warn("AI Assistant stop is unavailable:", error);
+          }
+        });
+      }
+
+      if (micButton) {
+        micButton.addEventListener("click", async function () {
+          micMuted = !micMuted;
+          micButton.textContent = micMuted ? copy[selectedLanguage].micOff : copy[selectedLanguage].micOn;
+          micButton.classList.toggle("muted", micMuted);
+          micButton.setAttribute("aria-pressed", String(micMuted));
+
+          try {
+            const currentApi = api || await waitForApi(5000);
+            await currentApi.functions.toggleMicState(micMuted);
+          } catch (error) {
+            console.warn("AI Assistant microphone control is unavailable:", error);
+          }
+        });
+      }
+    }
+
+    async function connectAgentEvents() {
+      setStatus("connecting", "connecting");
+      try {
+        const currentApi = await waitForApi(20000);
+        api = currentApi;
+
+        if (typeof currentApi.configure === "function") {
+          currentApi.configure({
+            orientation: "vertical",
+            openMode: "expanded",
+            showChatToggle: true,
+            showMicToggle: true,
+            showRestartButton: true,
+            autoConnect: true
+          });
+        }
+
+        currentApi.events.on("connection", function (payload) {
+          const state = String(payload && payload.state || "").toLowerCase();
+          if (state === "connected" || state === "completed") setStatus("ready", "ready");
+          else if (state === "new" || state === "connecting") setStatus("connecting", "connecting");
+          else if (state === "fail") setStatus("error", "error");
+        });
+
+        currentApi.events.on("agentActivity", function (payload) {
+          const state = String(payload && payload.state || "").toUpperCase();
+          if (state === "TALKING") setStatus("speaking", "speaking");
+          else if (state === "LOADING" || state === "BUFFERING") setStatus("thinking", "thinking");
+          else if (state === "IDLE") setStatus("ready", "ready");
+        });
+
+        currentApi.events.on("error", function (payload) {
+          console.error("D-ID Embed error:", payload && payload.error);
+          setStatus("error", "error");
+        });
+
+        setStatus("ready", "ready");
+      } catch (error) {
+        console.error("AI Assistant initialization error:", error);
+        setStatus("error", "error");
+      }
+    }
+
+    bindInterfaceEvents();
+    applyLanguage(selectedLanguage, false);
+    openAgent();
+
+    // D-ID loads as an ES module, so its global API can appear after DOMContentLoaded.
+    window.addEventListener("load", connectAgentEvents, { once: true });
+    window.setTimeout(function () {
+      if (!api) connectAgentEvents();
+    }, 1200);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initInterface, { once: true });
+  } else {
+    initInterface();
+  }
+})();
