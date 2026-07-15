@@ -58,10 +58,10 @@
   "📞 יצירת קשר"
 ]
         topics: {
-          experience: "לנוי ניסיון בפיתוח Backend ובבניית יישומי AI. היא עובדת עם Java, Spring Boot, Python, REST APIs ומערכות מבוזרות.",
-          projects: "הפרויקטים המרכזיים של נוי כוללים מנוע חיפוש מבוזר עם Kafka ו-Elasticsearch, מערכת TinyURL ומערכת לניהול סטודנטים.",
+          experience: "נוי היא מהנדסת בינה מלאכותית ומפתחת Backend עם ניסיון מעשי בבניית יישומים חכמים וממשקי API RESTful. היא פיתחה פרויקטים באמצעות Java, Spring Boot, Python, Docker, Kafka, Redis, MongoDB, PostgreSQL ו-Elasticsearch, עם דגש חזק על טכנולוגיות בינה מלאכותית וארכיטקטורת תוכנה מודרנית.",
+          projects: "נוי בנתה מספר פרויקטים, הכוללים מנוע חיפוש מבוזר המופעל על ידי Kafka ו-Elasticsearch. פלטפורמת TinyURL Redis ו-MongoDB הניתנת להרחבה עם  ",
           skills: "הכישורים של נוי כוללים Java, Python, Spring Boot, React, Docker, Kafka, Redis, MongoDB, PostgreSQL, Elasticsearch וכלי AI.",
-          education: "נוי השלימה תואר במדעי המחשב ורכשה בסיס חזק בתכנות, אלגוריתמים, מערכות תוכנה ופתרון בעיות.",
+          education: "נוי בעלת תואר ראשון במדעי המחשב ורכשה בסיס חזק בתכנות, אלגוריתמים, מסדי נתונים מערכות מבוזרות ופתרון בעיות באמצעות פרויקטים אישיים וקבוצתיים.",
           military:" נוי שירתה כלוחמת באריות הירדן, גדוד מעורב. שירותה הצבאי חיזק את מנהיגותה, חוסנה, עבודת הצוות שלה והיכולת שלה לתפקד תחת לחץ",
           contact: "אפשר ליצור קשר עם נוי דרך האימייל, WhatsApp, LinkedIn או GitHub המופיעים באזור יצירת הקשר באתר."
         }
