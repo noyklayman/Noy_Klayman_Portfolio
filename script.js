@@ -27,8 +27,6 @@
     let selectedLanguage = "he";
     let micMuted = false;
     let subtitleTimer = null;
-    let idleSubtitleTimer = null;
-    let subtitleFallbackTimer = null;
     let api = null;
 
     try {
