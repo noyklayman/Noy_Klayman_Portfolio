@@ -126,7 +126,7 @@
 
   subtitles.textContent = message;
   subtitles.classList.add("show");
-   
+
   const estimatedDuration = Math.min(
     Math.max(message.length * 75, 8000),
     45000
@@ -145,6 +145,7 @@
   window.clearTimeout(subtitleFallbackTimer);
 
   subtitleTimer = null;
+  idleSubtitleTimer = null;
   subtitleFallbackTimer = null;
 
   subtitles.classList.remove("show");
