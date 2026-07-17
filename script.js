@@ -17,7 +17,9 @@
     const openLabel = document.getElementById("agent-open-label");
     const heButton = document.getElementById("language-he");
     const enButton = document.getElementById("language-en");
-    const quickButtons = Array.from(document.querySelectorAll(".agent-quick-actions button"));
+    const quickButtons = Array.from(
+      document.querySelectorAll(".agent-quick-actions button")
+    );
 
     if (!overlay || !openButton || !closeButton) {
       console.error("AI Assistant: required overlay buttons were not found.");
@@ -28,12 +30,15 @@
     let micMuted = false;
     let subtitleTimer = null;
     let api = null;
-    let speakerMuted = false;
+    let eventsConnected = false;
 
     try {
-      selectedLanguage = window.localStorage.getItem("noy-agent-language") || "he";
+      selectedLanguage =
+        window.localStorage.getItem("noy-agent-language") || "he";
     } catch (error) {
-      console.warn("AI Assistant: localStorage is unavailable; Hebrew will be used by default.");
+      console.warn(
+        "AI Assistant: localStorage is unavailable; Hebrew will be used by default."
+      );
     }
 
     const copy = {
@@ -51,22 +56,29 @@
         micOff: "🔇 מיקרופון כבוי",
         languageMessage: "השיחה תמשיך בעברית. אפשר לדבר בעברית.",
         labels: [
-  "💼 ניסיון",
-  "💻 פרויקטים",
-  "🧠 כישורים",
-  "🎓 השכלה",
-  "🪖 שירות צבאי",
-  "📞 יצירת קשר"
-],
+          "💼 ניסיון",
+          "💻 פרויקטים",
+          "🧠 כישורים",
+          "🎓 השכלה",
+          "🪖 שירות צבאי",
+          "📞 יצירת קשר"
+        ],
         topics: {
-          experience: "נוי היא מהנדסת בינה מלאכותית ומפתחת Backend עם ניסיון מעשי בבניית יישומים חכמים וממשקי API RESTful. היא פיתחה פרויקטים באמצעות Java, Spring Boot, Python, Docker, Kafka, Redis, MongoDB, PostgreSQL ו-Elasticsearch, עם דגש חזק על טכנולוגיות בינה מלאכותית וארכיטקטורת תוכנה מודרנית.",
-          projects: "נוי בנתה מספר פרויקטים, הכוללים מנוע חיפוש מבוזר המופעל על ידי Kafka ו-Elasticsearch. פלטפורמת TinyURL Redis ו-MongoDB הניתנת להרחבה עם  ",
-          skills: "הכישורים של נוי כוללים Java, Python, Spring Boot, React, Docker, Kafka, Redis, MongoDB, PostgreSQL, Elasticsearch וכלי AI.",
-          education: "נוי בעלת תואר ראשון במדעי המחשב ורכשה בסיס חזק בתכנות, אלגוריתמים, מסדי נתונים מערכות מבוזרות ופתרון בעיות באמצעות פרויקטים אישיים וקבוצתיים.",
-          military:" נוי שירתה כלוחמת באריות הירדן, גדוד מעורב. שירותה הצבאי חיזק את מנהיגותה, חוסנה, עבודת הצוות שלה והיכולת שלה לתפקד תחת לחץ",
-          contact: "אפשר ליצור קשר עם נוי דרך האימייל, WhatsApp, LinkedIn או GitHub המופיעים באזור יצירת הקשר באתר."
+          experience:
+            "נוי היא מהנדסת בינה מלאכותית ומפתחת Backend עם ניסיון מעשי בבניית יישומים חכמים וממשקי API RESTful. היא פיתחה פרויקטים באמצעות Java, Spring Boot, Python, Docker, Kafka, Redis, MongoDB, PostgreSQL ו-Elasticsearch, עם דגש חזק על טכנולוגיות בינה מלאכותית וארכיטקטורת תוכנה מודרנית.",
+          projects:
+            "נוי בנתה מספר פרויקטים, הכוללים מנוע חיפוש מבוזר המופעל על ידי Kafka ו-Elasticsearch, וכן סוכן AI אינטראקטיבי לאתר הפורטפוליו שלה.",
+          skills:
+            "הכישורים של נוי כוללים Java, Python, Spring Boot, React, Docker, Kafka, Redis, MongoDB, PostgreSQL, Elasticsearch וכלי AI.",
+          education:
+            "נוי בעלת תואר ראשון במדעי המחשב ורכשה בסיס חזק בתכנות, אלגוריתמים, מסדי נתונים, מערכות מבוזרות ופתרון בעיות באמצעות פרויקטים אישיים וקבוצתיים.",
+          military:
+            "נוי שירתה כלוחמת באריות הירדן, גדוד מעורב. שירותה הצבאי חיזק את מנהיגותה, חוסנה, עבודת הצוות שלה והיכולת שלה לתפקד תחת לחץ.",
+          contact:
+            "אפשר ליצור קשר עם נוי דרך האימייל, WhatsApp, LinkedIn או GitHub המופיעים באזור יצירת הקשר באתר."
         }
       },
+
       en: {
         ready: "Connected and ready to chat",
         connecting: "Connecting…",
@@ -74,20 +86,35 @@
         thinking: "Thinking…",
         error: "Unable to connect to the Agent",
         title: "Hello! I’m Noy’s AI assistant.",
-        help: "Speak inside the Agent window, or choose one of the suggested topics.",
+        help:
+          "Speak inside the Agent window, or choose one of the suggested topics.",
         open: "Open AI Assistant",
         stop: "■ Stop",
         micOn: "🎤 Microphone",
         micOff: "🔇 Microphone muted",
-        languageMessage: "The conversation will continue in English. You can speak in English.",
-        labels: ["💼 Experience", "💻 Projects", "🧠 Skills", "🎓 Education", "🪖 Military", "📞 Contact"],
+        languageMessage:
+          "The conversation will continue in English. You can speak in English.",
+        labels: [
+          "💼 Experience",
+          "💻 Projects",
+          "🧠 Skills",
+          "🎓 Education",
+          "🪖 Military",
+          "📞 Contact"
+        ],
         topics: {
-          experience: "Noy is an AI Engineer and Backend Developer with hands-on experience building intelligent applications, RESTful APIs, distributed systems, and scalable backend solutions. She has developed projects using Java, Spring Boot, Python, Docker, MongoDB and PostgreSQL, with a strong focus on AI technologies.",
-          projects: "Noy has built several end-to-end software projects, including a distributed search engine powered by Kafka and Elasticsearch, and an AI-powered portfolio assistant capable of interacting with visitors in both English and Hebrew.",
-          skills: "Noy's technical skills include Java, Python, Spring Boot, React, JavaScript, REST APIs, Docker, Kafka, Redis, MongoDB, PostgreSQL, Cassandra, Elasticsearch, Git, AWS, and conversational AI technologies.", 
-          education: "Noy earned a Bachelor's degree in Computer Science, where she built a strong foundation in software engineering, algorithms, object-oriented programming, databases, distributed systems, and problem-solving through both individual and team-based software projects.",
-          military: "Noy served as a Combat Soldier in the mixed-gender Lions of Jordan Battalion in the Israeli Defense Forces. Her military service strengthened her leadership, resilience, teamwork, and ability to perform under pressure.",
-          contact: "If you would like to discuss opportunities, collaborate on a project, or simply get in touch, you can contact Noy via email, WhatsApp, LinkedIn, or GitHub using the Contact section at the bottom of this website."
+          experience:
+            "Noy is an AI Engineer and Backend Developer with hands-on experience building intelligent applications, RESTful APIs, distributed systems, and scalable backend solutions. She has developed projects using Java, Spring Boot, Python, Docker, MongoDB, and PostgreSQL, with a strong focus on AI technologies.",
+          projects:
+            "Noy has built several end-to-end software projects, including a distributed search engine powered by Kafka and Elasticsearch, and an AI-powered portfolio assistant capable of interacting with visitors in both English and Hebrew.",
+          skills:
+            "Noy's technical skills include Java, Python, Spring Boot, React, JavaScript, REST APIs, Docker, Kafka, Redis, MongoDB, PostgreSQL, Cassandra, Elasticsearch, Git, AWS, and conversational AI technologies.",
+          education:
+            "Noy earned a Bachelor's degree in Computer Science, where she built a strong foundation in software engineering, algorithms, object-oriented programming, databases, distributed systems, and problem-solving through both individual and team-based software projects.",
+          military:
+            "Noy served as a Combat Soldier in the mixed-gender Lions of Jordan Battalion in the Israeli Defense Forces. Her military service strengthened her leadership, resilience, teamwork, and ability to perform under pressure.",
+          contact:
+            "If you would like to discuss opportunities, collaborate on a project, or simply get in touch, you can contact Noy via email, WhatsApp, LinkedIn, or GitHub using the Contact section at the bottom of this website."
         }
       }
     };
@@ -109,24 +136,34 @@
     }
 
     function setStatus(key, stateName) {
-      if (status) status.textContent = copy[selectedLanguage][key] || key;
-      if (statusDot) statusDot.dataset.state = stateName || "ready";
+      if (status) {
+        status.textContent = copy[selectedLanguage][key] || key;
+      }
+
+      if (statusDot) {
+        statusDot.dataset.state = stateName || "ready";
+      }
     }
 
-    function showSubtitle(message, duration) {
-      if (!subtitles) return;
+    function showSubtitle(message, duration = 12000) {
+      if (!subtitles || !message) return;
+
       window.clearTimeout(subtitleTimer);
+
       subtitles.textContent = message;
       subtitles.classList.add("show");
+
       subtitleTimer = window.setTimeout(function () {
-        subtitles.classList.remove("show");
-        subtitles.textContent = "";
-      }, duration || 9000);
+        hideSubtitle();
+      }, duration);
     }
 
     function hideSubtitle() {
       if (!subtitles) return;
+
       window.clearTimeout(subtitleTimer);
+      subtitleTimer = null;
+
       subtitles.classList.remove("show");
       subtitles.textContent = "";
     }
@@ -135,30 +172,56 @@
       try {
         window.localStorage.setItem("noy-agent-language", language);
       } catch (error) {
-        // The interface still works when storage is blocked.
+        console.warn("AI Assistant: language preference could not be saved.");
       }
     }
 
     function applyLanguage(language, announce) {
       selectedLanguage = language === "en" ? "en" : "he";
       saveLanguage(selectedLanguage);
+
       const isHebrew = selectedLanguage === "he";
 
       if (heButton) heButton.classList.toggle("active", isHebrew);
       if (enButton) enButton.classList.toggle("active", !isHebrew);
-      if (content) content.dir = isHebrew ? "rtl" : "ltr";
+
+      if (content) {
+        content.dir = isHebrew ? "rtl" : "ltr";
+      }
+
       if (subtitles) {
         subtitles.dir = isHebrew ? "rtl" : "ltr";
         subtitles.lang = selectedLanguage;
       }
-      if (welcomeTitle) welcomeTitle.textContent = copy[selectedLanguage].title;
-      if (helpText) helpText.textContent = copy[selectedLanguage].help;
-      if (openLabel) openLabel.textContent = copy[selectedLanguage].open;
-      if (stopButton) stopButton.textContent = copy[selectedLanguage].stop;
-      if (micButton) micButton.textContent = micMuted ? copy[selectedLanguage].micOff : copy[selectedLanguage].micOn;
+
+      if (welcomeTitle) {
+        welcomeTitle.textContent = copy[selectedLanguage].title;
+      }
+
+      if (helpText) {
+        helpText.textContent = copy[selectedLanguage].help;
+      }
+
+      if (openLabel) {
+        openLabel.textContent = copy[selectedLanguage].open;
+      }
+
+      if (stopButton) {
+        stopButton.textContent = copy[selectedLanguage].stop;
+      }
+
+      if (micButton) {
+        micButton.textContent = micMuted
+          ? copy[selectedLanguage].micOff
+          : copy[selectedLanguage].micOn;
+      }
+
       quickButtons.forEach(function (button, index) {
-        button.textContent = copy[selectedLanguage].labels[index];
+        if (copy[selectedLanguage].labels[index]) {
+          button.textContent = copy[selectedLanguage].labels[index];
+        }
       });
+
       setStatus(api ? "ready" : "connecting", api ? "ready" : "connecting");
 
       if (announce) {
@@ -166,7 +229,7 @@
       }
     }
 
-    function waitForApi(timeout) {
+    function waitForApi(timeout = 20000) {
       return new Promise(function (resolve, reject) {
         if (window.DID_AGENTS_API) {
           api = window.DID_AGENTS_API;
@@ -175,12 +238,16 @@
         }
 
         const started = Date.now();
+
         const timer = window.setInterval(function () {
           if (window.DID_AGENTS_API) {
             window.clearInterval(timer);
             api = window.DID_AGENTS_API;
             resolve(api);
-          } else if (Date.now() - started >= (timeout || 20000)) {
+            return;
+          }
+
+          if (Date.now() - started >= timeout) {
             window.clearInterval(timer);
             reject(new Error("D-ID Embed API did not load"));
           }
@@ -189,22 +256,25 @@
     }
 
     async function speakText(message) {
+      if (!message) return;
+
       showSubtitle(message, 12000);
       setStatus("speaking", "speaking");
 
       try {
-        const currentApi = api || await waitForApi(20000);
+        const currentApi = api || (await waitForApi(20000));
 
         if (
-          speakerMuted &&
-          currentApi.functions &&
-          typeof currentApi.functions.toggleSpeakerState === "function"
+          !currentApi.functions ||
+          typeof currentApi.functions.speak !== "function"
         ) {
-          await currentApi.functions.toggleSpeakerState(false);
-          speakerMuted = false;
+          throw new Error("D-ID speak() is not available");
         }
 
-        await currentApi.functions.speak({ type: "text", input: message });
+        await currentApi.functions.speak({
+          type: "text",
+          input: message
+        });
       } catch (error) {
         console.error("AI Assistant speak error:", error);
         setStatus("error", "error");
@@ -225,7 +295,9 @@
       });
 
       overlay.addEventListener("click", function (event) {
-        if (event.target === overlay) closeAgent();
+        if (event.target === overlay) {
+          closeAgent();
+        }
       });
 
       if (panel) {
@@ -235,22 +307,36 @@
       }
 
       document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape" && overlay.classList.contains("active")) {
+        if (
+          event.key === "Escape" &&
+          overlay.classList.contains("active")
+        ) {
           closeAgent();
         }
       });
 
-      if (heButton) heButton.addEventListener("click", function () { applyLanguage("he", true); });
-      if (enButton) enButton.addEventListener("click", function () { applyLanguage("en", true); });
+      if (heButton) {
+        heButton.addEventListener("click", function () {
+          applyLanguage("he", true);
+        });
+      }
+
+      if (enButton) {
+        enButton.addEventListener("click", function () {
+          applyLanguage("en", true);
+        });
+      }
 
       quickButtons.forEach(function (button) {
         button.addEventListener("click", function () {
           const topic = button.dataset.topic;
           const message = copy[selectedLanguage].topics[topic];
-          if (message) speakText(message);
+
+          if (message) {
+            speakText(message);
+          }
         });
       });
-
 
       if (stopButton) {
         stopButton.addEventListener("click", async function (event) {
@@ -260,32 +346,21 @@
           console.log("STOP BUTTON CLICKED");
 
           try {
-            const currentApi = api || await waitForApi(10000);
+            const currentApi = api || (await waitForApi(10000));
 
-            if (!currentApi.functions) {
-              throw new Error("D-ID control functions are unavailable");
-            }
-
-            if (typeof currentApi.functions.interrupt === "function") {
-              await currentApi.functions.interrupt();
-            }
-
-            /*
-             * Fallback:
-             * Some D-ID avatar types accept interrupt() but keep playing audio.
-             * When speaker control is available, mute the Agent immediately.
-             */
             if (
-              typeof currentApi.functions.toggleSpeakerState === "function"
+              !currentApi.functions ||
+              typeof currentApi.functions.interrupt !== "function"
             ) {
-              await currentApi.functions.toggleSpeakerState(true);
-              speakerMuted = true;
+              throw new Error("D-ID interrupt() is not available");
             }
+
+            await currentApi.functions.interrupt();
 
             hideSubtitle();
             setStatus("ready", "ready");
 
-            console.log("STOP COMMAND COMPLETED");
+            console.log("INTERRUPT COMMAND SENT");
           } catch (error) {
             console.error("STOP ERROR:", error);
 
@@ -296,58 +371,96 @@
       }
 
       if (micButton) {
-        micButton.addEventListener("click", async function () {
+        micButton.addEventListener("click", async function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+
           micMuted = !micMuted;
-          micButton.textContent = micMuted ? copy[selectedLanguage].micOff : copy[selectedLanguage].micOn;
+
+          micButton.textContent = micMuted
+            ? copy[selectedLanguage].micOff
+            : copy[selectedLanguage].micOn;
+
           micButton.classList.toggle("muted", micMuted);
           micButton.setAttribute("aria-pressed", String(micMuted));
 
           try {
-            const currentApi = api || await waitForApi(5000);
+            const currentApi = api || (await waitForApi(5000));
+
+            if (
+              !currentApi.functions ||
+              typeof currentApi.functions.toggleMicState !== "function"
+            ) {
+              throw new Error("D-ID toggleMicState() is not available");
+            }
+
             await currentApi.functions.toggleMicState(micMuted);
           } catch (error) {
-            console.warn("AI Assistant microphone control is unavailable:", error);
+            console.warn(
+              "AI Assistant microphone control is unavailable:",
+              error
+            );
           }
         });
       }
     }
 
     async function connectAgentEvents() {
+      if (eventsConnected) return;
+
       setStatus("connecting", "connecting");
+
       try {
         const currentApi = await waitForApi(20000);
         api = currentApi;
 
-        if (typeof currentApi.configure === "function") {
-          currentApi.configure({
-            orientation: "vertical",
-            openMode: "expanded",
-            showChatToggle: true,
-            showMicToggle: true,
-            showRestartButton: true,
-            autoConnect: true
+        if (
+          currentApi.events &&
+          typeof currentApi.events.on === "function"
+        ) {
+          currentApi.events.on("connection", function (payload) {
+            const state = String(
+              (payload && payload.state) || ""
+            ).toLowerCase();
+
+            if (state === "connected" || state === "completed") {
+              setStatus("ready", "ready");
+            } else if (state === "new" || state === "connecting") {
+              setStatus("connecting", "connecting");
+            } else if (state === "fail") {
+              setStatus("error", "error");
+            }
+          });
+
+          currentApi.events.on("agentActivity", function (payload) {
+            const state = String(
+              (payload && payload.state) || ""
+            ).toUpperCase();
+
+            console.log("D-ID agent activity:", state);
+
+            if (state === "TALKING") {
+              setStatus("speaking", "speaking");
+            } else if (
+              state === "LOADING" ||
+              state === "BUFFERING"
+            ) {
+              setStatus("thinking", "thinking");
+            } else if (state === "IDLE") {
+              setStatus("ready", "ready");
+            }
+          });
+
+          currentApi.events.on("error", function (payload) {
+            console.error(
+              "D-ID Embed error:",
+              payload && payload.error
+            );
+            setStatus("error", "error");
           });
         }
 
-        currentApi.events.on("connection", function (payload) {
-          const state = String(payload && payload.state || "").toLowerCase();
-          if (state === "connected" || state === "completed") setStatus("ready", "ready");
-          else if (state === "new" || state === "connecting") setStatus("connecting", "connecting");
-          else if (state === "fail") setStatus("error", "error");
-        });
-
-        currentApi.events.on("agentActivity", function (payload) {
-          const state = String(payload && payload.state || "").toUpperCase();
-          if (state === "TALKING") setStatus("speaking", "speaking");
-          else if (state === "LOADING" || state === "BUFFERING") setStatus("thinking", "thinking");
-          else if (state === "IDLE") setStatus("ready", "ready");
-        });
-
-        currentApi.events.on("error", function (payload) {
-          console.error("D-ID Embed error:", payload && payload.error);
-          setStatus("error", "error");
-        });
-
+        eventsConnected = true;
         setStatus("ready", "ready");
       } catch (error) {
         console.error("AI Assistant initialization error:", error);
@@ -359,18 +472,26 @@
     applyLanguage(selectedLanguage, false);
     openAgent();
 
-    // D-ID loads as an ES module, so its global API can appear after DOMContentLoaded.
-    window.addEventListener("load", connectAgentEvents, { once: true });
+    if (document.readyState === "complete") {
+      connectAgentEvents();
+    } else {
+      window.addEventListener("load", connectAgentEvents, {
+        once: true
+      });
+    }
+
     window.setTimeout(function () {
-      if (!api) connectAgentEvents();
+      if (!eventsConnected) {
+        connectAgentEvents();
+      }
     }, 1200);
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initInterface, { once: true });
+    document.addEventListener("DOMContentLoaded", initInterface, {
+      once: true
+    });
   } else {
     initInterface();
   }
-
-
 })();
