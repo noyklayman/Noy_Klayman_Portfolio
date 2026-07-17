@@ -1090,16 +1090,16 @@ body.agent-open {
   transform: translateX(-50%) translateY(10px);
 
   width: calc(100% - 40px);
-  max-width: 720px;
-
-  padding: 14px 22px;
+  max-width: 96%;
+  min-width: 420px;
+  padding: 12px 24px;
 
   background: rgba(0, 0, 0, 0.72);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
   color: #ffffff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 1.5;
   text-align: center;
