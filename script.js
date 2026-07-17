@@ -240,37 +240,6 @@
         });
       });
 
-     if (stopButton) {
-  stopButton.addEventListener("click", async function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    console.log("Stop button clicked");
-
-    try {
-      const currentApi = api || await waitForApi(10000);
-
-      if (
-        !currentApi.functions ||
-        typeof currentApi.functions.interrupt !== "function"
-      ) {
-        throw new Error("D-ID interrupt function is unavailable");
-      }
-
-      await currentApi.functions.interrupt();
-
-      hideSubtitle();
-      setStatus("ready", "ready");
-
-      console.log("Agent speech stopped");
-    } catch (error) {
-      console.error("Stop button error:", error);
-
-      hideSubtitle();
-      setStatus("ready", "ready");
-    }
-  });
-}
 
       if (micButton) {
         micButton.addEventListener("click", async function () {
@@ -348,4 +317,55 @@
   } else {
     initInterface();
   }
+
+  document.addEventListener("click", async function (event) {
+  const stopBtn = event.target.closest("#agent-stop-btn");
+
+  if (!stopBtn) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  console.log("Stop button clicked");
+
+  stopBtn.disabled = true;
+
+  try {
+    const didApi = window.DID_AGENTS_API;
+
+    if (
+      !didApi ||
+      !didApi.functions ||
+      typeof didApi.functions.interrupt !== "function"
+    ) {
+      throw new Error("D-ID interrupt function is not available");
+    }
+
+    await didApi.functions.interrupt();
+
+    console.log("Agent stopped successfully");
+
+    const subtitlesElement =
+      document.getElementById("agent-subtitles");
+
+    if (subtitlesElement) {
+      subtitlesElement.classList.remove("show");
+      subtitlesElement.textContent = "";
+    }
+
+    const statusElement =
+      document.getElementById("agent-status");
+
+    if (statusElement) {
+      statusElement.textContent =
+        document.documentElement.lang === "he"
+          ? "מחובר ומוכן לשיחה"
+          : "Connected and ready to chat";
+    }
+  } catch (error) {
+    console.error("Stop Agent error:", error);
+  } finally {
+    stopBtn.disabled = false;
+  }
+});
 })();
