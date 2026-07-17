@@ -1182,37 +1182,17 @@ body.agent-open {
 }
 
 .agent-subtitles {
-  position: absolute !important;
+     background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+}
 
-  left: 50% !important;
-  bottom: 24px !important;
-  transform: translateX(-50%) !important;
-
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-
-  width: calc(100% - 60px) !important;
-  max-width: 700px !important;
-
-  padding: 14px 20px !important;
-
-  background: rgba(0, 0, 0, 0.78) !important;
-  color: #000000 !important;
-
-  font-family: Arial, sans-serif !important;
-  font-size: 20px !important;
-  font-weight: 600 !important;
-  line-height: 1.4 !important;
-  text-align: center !important;
-
-  border-radius: 14px !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5) !important;
-
-  pointer-events: none !important;
-  z-index: 2147483647 !important;
+#agent-subtitles::before,
+#agent-subtitles::after {
+    display: none !important;
 }
 
 @media (max-width: 600px) {
