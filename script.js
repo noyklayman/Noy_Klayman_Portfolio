@@ -28,6 +28,7 @@
     let micMuted = false;
     let subtitleTimer = null;
     let idleSubtitleTimer = null;
+    let subtitleFallbackTimer = null;
     let api = null;
 
     try {
@@ -113,20 +114,28 @@
       if (statusDot) statusDot.dataset.state = stateName || "ready";
     }
 
-   function showSubtitle(message, duration) {
+ function showSubtitle(message) {
   if (!subtitles) return;
 
   window.clearTimeout(subtitleTimer);
+  window.clearTimeout(idleSubtitleTimer);
+  window.clearTimeout(subtitleFallbackTimer);
+
   subtitleTimer = null;
+  idleSubtitleTimer = null;
+  subtitleFallbackTimer = null;
 
   subtitles.textContent = message;
   subtitles.classList.add("show");
+   
+  const estimatedDuration = Math.min(
+    Math.max(message.length * 75, 8000),
+    45000
+  );
 
-  if (duration && duration > 0) {
-    subtitleTimer = window.setTimeout(function () {
-      hideSubtitle();
-    }, duration);
-  }
+  subtitleFallbackTimer = window.setTimeout(function () {
+    hideSubtitle();
+  }, estimatedDuration);
 }
 
   function hideSubtitle() {
@@ -134,9 +143,11 @@
 
   window.clearTimeout(subtitleTimer);
   window.clearTimeout(idleSubtitleTimer);
+  window.clearTimeout(subtitleFallbackTimer);
 
   subtitleTimer = null;
   idleSubtitleTimer = null;
+  subtitleFallbackTimer = null;
 
   subtitles.classList.remove("show");
   subtitles.textContent = "";
@@ -306,28 +317,26 @@
           else if (state === "fail") setStatus("error", "error");
         });
 
-        currentApi.events.on("agentActivity", function (payload) {
+  currentApi.events.on("agentActivity", function (payload) {
   const state = String(
     payload && payload.state ? payload.state : ""
   ).toUpperCase();
 
   console.log("D-ID agent activity:", state);
 
-  if (
-    state === "TALKING" ||
-    state === "LOADING" ||
-    state === "BUFFERING"
-  ) {
-    
+  if (state === "TALKING") {
     window.clearTimeout(idleSubtitleTimer);
     idleSubtitleTimer = null;
 
-    if (state === "TALKING") {
-      setStatus("speaking", "speaking");
-    } else {
-      setStatus("thinking", "thinking");
-    }
+    setStatus("speaking", "speaking");
+    return;
+  }
 
+  if (state === "LOADING" || state === "BUFFERING") {
+    window.clearTimeout(idleSubtitleTimer);
+    idleSubtitleTimer = null;
+
+    setStatus("thinking", "thinking");
     return;
   }
 
@@ -338,8 +347,7 @@
 
     idleSubtitleTimer = window.setTimeout(function () {
       hideSubtitle();
-      idleSubtitleTimer = null;
-    }, 3500);
+    }, 1500);
   }
 });
 
