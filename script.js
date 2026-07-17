@@ -27,7 +27,6 @@
     let selectedLanguage = "he";
     let micMuted = false;
     let subtitleTimer = null;
-    let agentConnected = false;
     let api = null;
 
     try {
@@ -82,8 +81,8 @@
         languageMessage: "The conversation will continue in English. You can speak in English.",
         labels: ["💼 Experience", "💻 Projects", "🧠 Skills", "🎓 Education", "🪖 Military", "📞 Contact"],
         topics: {
-          experience: "Noy is an AI Engineer and Backend Developer with hands-on experience building intelligent applications, RESTful APIs, distributed systems, and scalable backend solutions. She has developed projects using Java, Spring Boot, Python, Docker, Kafka, MongoDB and PostgreSQL, with a strong focus on AI technologies and modern software architecture.",
-          projects: "Noy has built several end-to-end software projects, including a distributed search engine powered by Kafka and Elasticsearch, and an AI-powered portfolio assistant capable of interacting with visitors in both English and Hebrew.",
+          experience: "Noy is an AI Engineer and Backend Developer with hands-on experience building intelligent applications, RESTful APIs, distributed systems, and scalable backend solutions. She has developed projects using Java, Spring Boot, Python, Docker, Kafka, Redis, MongoDB, PostgreSQL, and Elasticsearch, with a strong focus on AI technologies and modern software architecture.",
+          projects: "Noy has built several end-to-end software projects, including a distributed search engine powered by Kafka and Elasticsearch, a scalable TinyURL platform with Redis and MongoDB, a Student Management System using Flask and PostgreSQL, and an AI-powered portfolio assistant capable of interacting with visitors in both English and Hebrew.",
           skills: "Noy's technical skills include Java, Python, Spring Boot, React, JavaScript, REST APIs, Docker, Kafka, Redis, MongoDB, PostgreSQL, Cassandra, Elasticsearch, Git, AWS, and conversational AI technologies.", 
           education: "Noy earned a Bachelor's degree in Computer Science, where she built a strong foundation in software engineering, algorithms, object-oriented programming, databases, distributed systems, and problem-solving through both individual and team-based software projects.",
           military: "Noy served as a Combat Soldier in the mixed-gender Lions of Jordan Battalion in the Israeli Defense Forces. Her military service strengthened her leadership, resilience, teamwork, and ability to perform under pressure.",
@@ -113,44 +112,23 @@
       if (statusDot) statusDot.dataset.state = stateName || "ready";
     }
 
- function showSubtitle(message) {
-  if (!subtitles) return;
+    function showSubtitle(message, duration) {
+      if (!subtitles) return;
+      window.clearTimeout(subtitleTimer);
+      subtitles.textContent = message;
+      subtitles.classList.add("show");
+      subtitleTimer = window.setTimeout(function () {
+        subtitles.classList.remove("show");
+        subtitles.textContent = "";
+      }, duration || 9000);
+    }
 
-  window.clearTimeout(subtitleTimer);
-  window.clearTimeout(idleSubtitleTimer);
-  window.clearTimeout(subtitleFallbackTimer);
-
-  subtitleTimer = null;
-  idleSubtitleTimer = null;
-  subtitleFallbackTimer = null;
-
-  subtitles.textContent = message;
-  subtitles.classList.add("show");
-
-  const estimatedDuration = Math.min(
-    Math.max(message.length * 75, 8000),
-    45000
-  );
-
-  subtitleFallbackTimer = window.setTimeout(function () {
-    hideSubtitle();
-  }, estimatedDuration);
-}
-
-  function hideSubtitle() {
-  if (!subtitles) return;
-
-  window.clearTimeout(subtitleTimer);
-  window.clearTimeout(idleSubtitleTimer);
-  window.clearTimeout(subtitleFallbackTimer);
-
-  subtitleTimer = null;
-  idleSubtitleTimer = null;
-  subtitleFallbackTimer = null;
-
-  subtitles.classList.remove("show");
-  subtitles.textContent = "";
-}
+    function hideSubtitle() {
+      if (!subtitles) return;
+      window.clearTimeout(subtitleTimer);
+      subtitles.classList.remove("show");
+      subtitles.textContent = "";
+    }
 
     function saveLanguage(language) {
       try {
@@ -210,7 +188,7 @@
     }
 
     async function speakText(message) {
-      showSubtitle(message);
+      showSubtitle(message, 12000);
       setStatus("speaking", "speaking");
 
       try {
@@ -316,39 +294,12 @@
           else if (state === "fail") setStatus("error", "error");
         });
 
-  currentApi.events.on("agentActivity", function (payload) {
-  const state = String(
-    payload && payload.state ? payload.state : ""
-  ).toUpperCase();
-
-  console.log("D-ID agent activity:", state);
-
-  if (state === "TALKING") {
-    window.clearTimeout(idleSubtitleTimer);
-    idleSubtitleTimer = null;
-
-    setStatus("speaking", "speaking");
-    return;
-  }
-
-  if (state === "LOADING" || state === "BUFFERING") {
-    window.clearTimeout(idleSubtitleTimer);
-    idleSubtitleTimer = null;
-
-    setStatus("thinking", "thinking");
-    return;
-  }
-
-  if (state === "IDLE" && agentConnected) {
-    setStatus("ready", "ready");
-
-    window.clearTimeout(idleSubtitleTimer);
-
-    idleSubtitleTimer = window.setTimeout(function () {
-      hideSubtitle();
-    }, 1500);
-  }
-});
+        currentApi.events.on("agentActivity", function (payload) {
+          const state = String(payload && payload.state || "").toUpperCase();
+          if (state === "TALKING") setStatus("speaking", "speaking");
+          else if (state === "LOADING" || state === "BUFFERING") setStatus("thinking", "thinking");
+          else if (state === "IDLE") setStatus("ready", "ready");
+        });
 
         currentApi.events.on("error", function (payload) {
           console.error("D-ID Embed error:", payload && payload.error);
