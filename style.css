@@ -1313,3 +1313,96 @@ body.agent-open {
 #agent-subtitles::after {
     display: none !important;
 }
+
+/* Mobile only */
+@media (max-width: 720px) {
+
+    .agent-overlay {
+        align-items: stretch;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .agent-panel {
+        width: 100%;
+        height: 100dvh;
+        max-height: 100dvh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border-radius: 0;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .agent-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        padding: 12px 14px;
+        background: rgba(10, 16, 32, 0.97);
+    }
+
+    .agent-language-switch {
+        padding: 8px 12px 10px;
+    }
+
+    .language-button {
+        min-width: 100px;
+        padding: 8px 12px;
+    }
+
+    .agent-video-card {
+        width: calc(100% - 24px);
+        height: 34dvh;
+        min-height: 220px;
+        max-height: 300px;
+        flex: 0 0 auto;
+        margin: 0 12px;
+    }
+
+    .did-agent-mount,
+    .did-agent-mount > * {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 220px !important;
+    }
+
+    .agent-content {
+        padding: 12px 12px 24px;
+    }
+
+    .agent-content h3 {
+        font-size: 17px;
+        margin-bottom: 5px;
+    }
+
+    .agent-content p {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    .agent-quick-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        margin-top: 10px;
+    }
+
+    .agent-quick-actions button {
+        min-height: 38px;
+        padding: 7px 5px;
+        font-size: 12px;
+    }
+
+    #agent-stop-btn {
+        display: none !important;
+    }
+
+    .agent-custom-controls {
+        justify-content: center;
+        margin-top: 10px;
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    #agent-mic-btn {
+        min-width: 170px;
+    }
+}
