@@ -110,7 +110,7 @@
           skills:
             "Noy's technical skills include Java, Python, Spring Boot, React, JavaScript, REST APIs, Docker, Kafka, Redis, MongoDB, PostgreSQL, Cassandra, Elasticsearch, Git, AWS, and conversational AI technologies.",
           education:
-            "Noy earned a Bachelor's degree in Computer Science, where she built a strong foundation in software engineering, algorithms, object-oriented programming, databases, distributed systems, and problem-solving through both individual and team-based software projects.",
+            "Noy learned a Bachelor's degree in Computer Science, where she built a strong foundation in software engineering, algorithms, object-oriented programming, databases, distributed systems, and problem-solving through both individual and team-based software projects.",
           military:
             "Noy served as a Combat Soldier in the mixed-gender Lions of Jordan Battalion in the Israeli Defense Forces. Her military service strengthened her leadership, resilience, teamwork, and ability to perform under pressure.",
           contact:
