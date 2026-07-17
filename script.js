@@ -27,6 +27,7 @@
     let selectedLanguage = "he";
     let micMuted = false;
     let subtitleTimer = null;
+    let agentConnected = false;
     let api = null;
 
     try {
@@ -144,7 +145,6 @@
   window.clearTimeout(subtitleFallbackTimer);
 
   subtitleTimer = null;
-  idleSubtitleTimer = null;
   subtitleFallbackTimer = null;
 
   subtitles.classList.remove("show");
