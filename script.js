@@ -112,16 +112,21 @@
       if (statusDot) statusDot.dataset.state = stateName || "ready";
     }
 
-    function showSubtitle(message, duration) {
-      if (!subtitles) return;
-      window.clearTimeout(subtitleTimer);
-      subtitles.textContent = message;
-      subtitles.classList.add("show");
-      subtitleTimer = window.setTimeout(function () {
-        subtitles.classList.remove("show");
-        subtitles.textContent = "";
-      }, duration || 9000);
-    }
+   function showSubtitle(message, duration) {
+  if (!subtitles) return;
+
+  window.clearTimeout(subtitleTimer);
+  subtitleTimer = null;
+
+  subtitles.textContent = message;
+  subtitles.classList.add("show");
+
+  if (duration && duration > 0) {
+    subtitleTimer = window.setTimeout(function () {
+      hideSubtitle();
+    }, duration);
+  }
+}
 
     function hideSubtitle() {
       if (!subtitles) return;
@@ -188,7 +193,7 @@
     }
 
     async function speakText(message) {
-      showSubtitle(message, 12000);
+      showSubtitle(message);
       setStatus("speaking", "speaking");
 
       try {
@@ -295,10 +300,18 @@
         });
 
         currentApi.events.on("agentActivity", function (payload) {
-          const state = String(payload && payload.state || "").toUpperCase();
-          if (state === "TALKING") setStatus("speaking", "speaking");
-          else if (state === "LOADING" || state === "BUFFERING") setStatus("thinking", "thinking");
-          else if (state === "IDLE") setStatus("ready", "ready");
+          if (state === "TALKING") {
+            setStatus("speaking", "speaking");
+          } else if (state === "LOADING" || state === "BUFFERING") {
+            setStatus("thinking", "thinking");
+          } else if (state === "IDLE" && agentConnected) {
+            setStatus("ready", "ready");
+
+            window.clearTimeout(subtitleTimer);
+            subtitleTimer = window.setTimeout(function () {
+            hideSubtitle();
+            }, 800);
+          }
         });
 
         currentApi.events.on("error", function (payload) {
