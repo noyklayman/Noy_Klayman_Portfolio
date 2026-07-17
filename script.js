@@ -240,18 +240,37 @@
         });
       });
 
-      if (stopButton) {
-        stopButton.addEventListener("click", async function () {
-          hideSubtitle();
-          setStatus("ready", "ready");
-          try {
-            const currentApi = api || await waitForApi(5000);
-            await currentApi.functions.interrupt();
-          } catch (error) {
-            console.warn("AI Assistant stop is unavailable:", error);
-          }
-        });
+     if (stopButton) {
+  stopButton.addEventListener("click", async function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    console.log("Stop button clicked");
+
+    try {
+      const currentApi = api || await waitForApi(10000);
+
+      if (
+        !currentApi.functions ||
+        typeof currentApi.functions.interrupt !== "function"
+      ) {
+        throw new Error("D-ID interrupt function is unavailable");
       }
+
+      await currentApi.functions.interrupt();
+
+      hideSubtitle();
+      setStatus("ready", "ready");
+
+      console.log("Agent speech stopped");
+    } catch (error) {
+      console.error("Stop button error:", error);
+
+      hideSubtitle();
+      setStatus("ready", "ready");
+    }
+  });
+}
 
       if (micButton) {
         micButton.addEventListener("click", async function () {
