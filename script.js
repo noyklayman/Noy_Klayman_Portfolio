@@ -56,7 +56,7 @@
   "🎓 השכלה",
   "🪖 שירות צבאי",
   "📞 יצירת קשר"
-]
+],
         topics: {
           experience: "נוי היא מהנדסת בינה מלאכותית ומפתחת Backend עם ניסיון מעשי בבניית יישומים חכמים וממשקי API RESTful. היא פיתחה פרויקטים באמצעות Java, Spring Boot, Python, Docker, Kafka, Redis, MongoDB, PostgreSQL ו-Elasticsearch, עם דגש חזק על טכנולוגיות בינה מלאכותית וארכיטקטורת תוכנה מודרנית.",
           projects: "נוי בנתה מספר פרויקטים, הכוללים מנוע חיפוש מבוזר המופעל על ידי Kafka ו-Elasticsearch. פלטפורמת TinyURL Redis ו-MongoDB הניתנת להרחבה עם  ",
