@@ -318,54 +318,34 @@
     initInterface();
   }
 
-  document.addEventListener("click", async function (event) {
-  const stopBtn = event.target.closest("#agent-stop-btn");
+  
+if (stopButton) {
+  stopButton.addEventListener("click", async function (event) {
+    event.preventDefault();
+    event.stopPropagation();
 
-  if (!stopBtn) return;
+    console.log("STOP BUTTON CLICKED");
 
-  event.preventDefault();
-  event.stopPropagation();
+    try {
+      const currentApi = await waitForApi(10000);
 
-  console.log("Stop button clicked");
+      if (
+        !currentApi ||
+        !currentApi.functions ||
+        typeof currentApi.functions.interrupt !== "function"
+      ) {
+        throw new Error("interrupt() is not available");
+      }
 
-  stopBtn.disabled = true;
+      currentApi.functions.interrupt();
 
-  try {
-    const didApi = window.DID_AGENTS_API;
+      hideSubtitle();
+      setStatus("ready", "ready");
 
-    if (
-      !didApi ||
-      !didApi.functions ||
-      typeof didApi.functions.interrupt !== "function"
-    ) {
-      throw new Error("D-ID interrupt function is not available");
+      console.log("INTERRUPT COMMAND SENT");
+    } catch (error) {
+      console.error("STOP ERROR:", error);
     }
-
-    await didApi.functions.interrupt();
-
-    console.log("Agent stopped successfully");
-
-    const subtitlesElement =
-      document.getElementById("agent-subtitles");
-
-    if (subtitlesElement) {
-      subtitlesElement.classList.remove("show");
-      subtitlesElement.textContent = "";
-    }
-
-    const statusElement =
-      document.getElementById("agent-status");
-
-    if (statusElement) {
-      statusElement.textContent =
-        document.documentElement.lang === "he"
-          ? "מחובר ומוכן לשיחה"
-          : "Connected and ready to chat";
-    }
-  } catch (error) {
-    console.error("Stop Agent error:", error);
-  } finally {
-    stopBtn.disabled = false;
-  }
-});
+  });
+}
 })();
