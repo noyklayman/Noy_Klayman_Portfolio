@@ -27,6 +27,7 @@
     let selectedLanguage = "he";
     let micMuted = false;
     let subtitleTimer = null;
+    let idleSubtitleTimer = null;
     let api = null;
 
     try {
@@ -128,12 +129,18 @@
   }
 }
 
-    function hideSubtitle() {
-      if (!subtitles) return;
-      window.clearTimeout(subtitleTimer);
-      subtitles.classList.remove("show");
-      subtitles.textContent = "";
-    }
+  function hideSubtitle() {
+  if (!subtitles) return;
+
+  window.clearTimeout(subtitleTimer);
+  window.clearTimeout(idleSubtitleTimer);
+
+  subtitleTimer = null;
+  idleSubtitleTimer = null;
+
+  subtitles.classList.remove("show");
+  subtitles.textContent = "";
+}
 
     function saveLanguage(language) {
       try {
@@ -300,19 +307,41 @@
         });
 
         currentApi.events.on("agentActivity", function (payload) {
-          if (state === "TALKING") {
-            setStatus("speaking", "speaking");
-          } else if (state === "LOADING" || state === "BUFFERING") {
-            setStatus("thinking", "thinking");
-          } else if (state === "IDLE" && agentConnected) {
-            setStatus("ready", "ready");
+  const state = String(
+    payload && payload.state ? payload.state : ""
+  ).toUpperCase();
 
-            window.clearTimeout(subtitleTimer);
-            subtitleTimer = window.setTimeout(function () {
-            hideSubtitle();
-            }, 800);
-          }
-        });
+  console.log("D-ID agent activity:", state);
+
+  if (
+    state === "TALKING" ||
+    state === "LOADING" ||
+    state === "BUFFERING"
+  ) {
+    
+    window.clearTimeout(idleSubtitleTimer);
+    idleSubtitleTimer = null;
+
+    if (state === "TALKING") {
+      setStatus("speaking", "speaking");
+    } else {
+      setStatus("thinking", "thinking");
+    }
+
+    return;
+  }
+
+  if (state === "IDLE" && agentConnected) {
+    setStatus("ready", "ready");
+
+    window.clearTimeout(idleSubtitleTimer);
+
+    idleSubtitleTimer = window.setTimeout(function () {
+      hideSubtitle();
+      idleSubtitleTimer = null;
+    }, 3500);
+  }
+});
 
         currentApi.events.on("error", function (payload) {
           console.error("D-ID Embed error:", payload && payload.error);
